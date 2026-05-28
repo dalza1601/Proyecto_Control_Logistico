@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Proyecto_Control_Logistico.Domain\Proyecto_Control_Logistico.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

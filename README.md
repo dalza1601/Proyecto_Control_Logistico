@@ -89,6 +89,7 @@ Licencia
 Incluir licencia del proyecto (por ejemplo MIT) en el fichero LICENSE si procede.
 
 Contacto
+
 --------
 Repositorio original: https://github.com/dalza1601/Proyecto_Control_Logistico
 
