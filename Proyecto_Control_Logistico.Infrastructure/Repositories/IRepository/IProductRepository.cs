@@ -2,7 +2,7 @@
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
 {
-    public interface IProductoRepository : IRepository<Product>
+    public interface IProductRepository : IRepository<Product>
     {
         Task<Product?> GetByCodeAsync(string code);
         Task<IEnumerable<Product>> GetProductActivesAsync();

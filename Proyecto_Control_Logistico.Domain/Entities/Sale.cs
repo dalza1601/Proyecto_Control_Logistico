@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Proyecto_Control_Logistico.Domain.Entities
 {
     [Index(nameof(NumberSale), IsUnique = true)]
-
     public class Sale : BaseEntity
     {
         [Required]

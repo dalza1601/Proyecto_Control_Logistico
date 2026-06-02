@@ -2,7 +2,7 @@
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
 {
-    public interface IIventoryRepository : IRepository<Inventary>
+    public interface IInventoryRepository : IRepository<Inventary>
     {
         Task<Inventary> GetByProductAsync(int productId);
         Task<IEnumerable<Inventary>> GetStockBajoAsync();

@@ -2,7 +2,7 @@
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
 {
-    public interface IWareHouse : IRepository<WareHouse>
+    public interface IWareHouseRepository : IRepository<WareHouse>
     {
         Task<WareHouse> GetWareHouseByNameAsync(string name);
     }
