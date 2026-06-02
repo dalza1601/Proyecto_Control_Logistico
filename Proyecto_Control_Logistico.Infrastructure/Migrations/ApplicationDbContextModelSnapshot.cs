@@ -307,7 +307,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Proyecto_Control_Logistico.Domain.Entities.Inventory", b =>
+            modelBuilder.Entity("Proyecto_Control_Logistico.Domain.Entities.Inventary", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -749,7 +749,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Proyecto_Control_Logistico.Domain.Entities.Inventory", b =>
+            modelBuilder.Entity("Proyecto_Control_Logistico.Domain.Entities.Inventary", b =>
                 {
                     b.HasOne("Proyecto_Control_Logistico.Domain.Entities.Product", "Product")
                         .WithMany()

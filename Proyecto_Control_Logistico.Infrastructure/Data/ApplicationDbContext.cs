@@ -13,7 +13,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<Inventary> Inventories { get; set; }
         public DbSet<MovementInventory> MovementInventories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
@@ -58,7 +58,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .HasForeignKey(x => x.WareHouseId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
-            modelBuilder.Entity<Inventory>(e =>
+            modelBuilder.Entity<Inventary>(e =>
             {
                 e.HasKey(c => c.Id);
 

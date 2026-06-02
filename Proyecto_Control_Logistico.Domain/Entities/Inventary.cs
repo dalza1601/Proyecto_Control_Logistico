@@ -7,7 +7,7 @@ namespace Proyecto_Control_Logistico.Domain.Entities
     [Index(nameof(ProductId), IsUnique = true)]
     [Index(nameof(WareHouseId), IsUnique = true)]
 
-    public class Inventory : BaseEntity
+    public class Inventary : BaseEntity
     {
         public int ProductId { get; set; }
         public int WareHouseId { get; set; }

@@ -14,6 +14,6 @@ namespace Proyecto_Control_Logistico.Domain.Entities
         [Required]
         [MaxLength(250)]
         public string Address { get; set; } = string.Empty;
-        public ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
+        public ICollection<Inventary> Inventories { get; set; } = new List<Inventary>();
     }
 }
