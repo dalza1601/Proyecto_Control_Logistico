@@ -1,0 +1,12 @@
+﻿@{
+    var title = ViewData["ButtonTitle"];
+}
+
+<div class="row">
+    <div class="col-6">
+        <button type="submit" class="btn btn-primary form-control">@title</button>
+    </div>
+    <div class="col-6">
+        <a asp-action="Index" class="btn btn-success form-control">Volver atrás</a>
+    </div>
+</div>

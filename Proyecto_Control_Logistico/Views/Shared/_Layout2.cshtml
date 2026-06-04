@@ -13,8 +13,12 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="~/css/vertical-layout-light/style.css" sp-append-version="true">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" sp-append-version="true">
     <!-- endinject -->
     <link rel="shortcut icon" href="~/images/favicon.png" />
+    @await RenderSectionAsync("CSS", required: false)
+
 </head>
 <body>
 
@@ -29,6 +33,7 @@
             <div class="main-panel">
                 <div class="content-wrapper">
                     @RenderBody()
+                    <partial name="_NotificationPanel" />
                 </div>
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
@@ -63,6 +68,10 @@
     <!-- End plugin js for this page -->
     <!-- Custom js for this page-->
     <script src="~/js/dashboard.js"></script>
+    <script src="~/lib/sweet-alert/sweetalert2@11.js"></script>
+    <script src="~/lib/bootstrap/bootstrap.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
     <!-- End custom js for this page-->
 </body>
 </html>

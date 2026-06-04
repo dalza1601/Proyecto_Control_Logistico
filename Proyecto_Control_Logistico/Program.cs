@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Proyecto_Control_Logistico.Application.Mapping;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Infrastructure.Data;
+using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Infrastructure.Repositories.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +14,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI();
+
 builder.Services.AddControllersWithViews();
+
+//Agregamos el orquestador que es UnitOfWork
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    //cfg.AddProfile(new MappingHelpper());
+    cfg.AddProfile(new MappingHelper());
 });
 
 var app = builder.Build();
@@ -33,6 +41,7 @@ else
 }
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -40,9 +49,9 @@ app.MapStaticAssets();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}")
-    // url -> /Producto/Detalle/1
-    // url -> /Admin/Producto/Detalle/1
     .WithStaticAssets();
+// url -> /Producto/Detalle/1
+// url -> /Admin/Producto/Detalle/1
 
 app.MapRazorPages()
    .WithStaticAssets();

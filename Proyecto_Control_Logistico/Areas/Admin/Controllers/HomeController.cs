@@ -1,12 +1,22 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto_Control_Logistico.Domain;
+using Proyecto_Control_Logistico.Domain.Enums;
+using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 using Proyecto_Control_Logistico.Models;
+using Proyecto_Control_Logistico.UI.MVC.Utils;
 using System.Diagnostics;
 
 namespace Proyecto_Control_Logistico.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class HomeController : Controller
+
+    public class HomeController : BaseController
     {
+        public HomeController(IUnitOfWork unitOfWork, ILogger<BaseController> logger, IMapper mapper) : base(unitOfWork, logger, mapper)
+        {
+        }
+
         public IActionResult Index()
         {
             //return Content("{\"message\": \"Hello, World!\"}", "application/json");
@@ -20,6 +30,13 @@ namespace Proyecto_Control_Logistico.Areas.Admin.Controllers
             //return Redirect();
             //return NotFound();
 
+            //Alert("Bienvenido al panel de administración", NotificationType.sucess);
+            //AlertDraggable("Bienvenido al panel de administración", TypeIconsNotification.success);
+            //AlertTitleTextAndIcon("Bienvenido al panel de administración", "Gracias por utilizar nuestro sistema.", TypeIconsNotification.question);
+            //AlertErrorWithFooter(string.Format("Bienvenido al panel de administración"), TypeIconsNotification.error, "Gracias por utilizar nuestro sistema.");
+            //AlertWithImage("https://cdn-icons-png.flaticon.com/512/190/190411.png", 100, "Bienvenido");
+            //AlertDeleteYesOrNot();
+            //Alert(Constants.TypeErrors[TypeIconsNotification.error.ToString()], NotificationType.error);
             return View();
 
         }

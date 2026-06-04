@@ -7,14 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Mapping\" />
     <Folder Include="Services\IService\" />
     <Folder Include="Services\Service\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proyecto_Control_Logistico.Domain\Proyecto_Control_Logistico.Domain.csproj" />
   </ItemGroup>
 
 </Project>
