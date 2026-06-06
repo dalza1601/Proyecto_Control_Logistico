@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Control Logistico</title>
     <!-- base:css -->
+    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" sp-append-version="true">
+    <link rel="stylesheet" href="~/css/vertical-layout-light/style.css" sp-append-version="true">
     <link rel="stylesheet" href="~/vendors/typicons.font/font/typicons.css" sp-append-version="true">
     <link rel="stylesheet" href="~/vendors/css/vendor.bundle.base.css" sp-append-version="true">
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-    <link rel="stylesheet" href="~/css/vertical-layout-light/style.css" sp-append-version="true">
 
-    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" sp-append-version="true">
     <!-- endinject -->
     <link rel="shortcut icon" href="~/images/favicon.png" />
     @await RenderSectionAsync("CSS", required: false)
@@ -32,7 +32,14 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                    @RenderBody()
+                    <div class="row">
+                        <!-- Breadcrumps -->
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            @RenderBody()
+                        </div>
+                    </div>
                     <partial name="_NotificationPanel" />
                 </div>
                 <!-- content-wrapper ends -->
@@ -51,6 +58,7 @@
     </div>
     <!-- container-scroller -->
     <!-- base:js -->
+    <script src="~/lib/bootstrap/bootstrap.min.js"></script>
     <script src="~/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page-->
@@ -67,9 +75,9 @@
     <script src="~/vendors/chart.js/Chart.min.js"></script> *@
     <!-- End plugin js for this page -->
     <!-- Custom js for this page-->
-    <script src="~/js/dashboard.js"></script>
+    @* <script src="~/js/dashboard.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/lib/sweet-alert/sweetalert2@11.js"></script>
-    <script src="~/lib/bootstrap/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
     <!-- End custom js for this page-->

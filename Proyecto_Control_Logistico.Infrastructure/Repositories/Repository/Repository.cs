@@ -44,7 +44,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
             return await dbSet.FindAsync(id);
         }
 
-        public Task<T?> GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string? includeProperties = null)
+        public async Task<T?> GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string? includeProperties = null)
         {
             var baseQuery = filter != null ? dbSet.Where(filter) : dbSet.AsQueryable();
 
@@ -54,20 +54,21 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
                 .Aggregate(baseQuery, (current, include) => current.Include(include))
                 : baseQuery;
 
-            return Task.FromResult(queryWithIncludes.FirstOrDefault());
+            return await queryWithIncludes.FirstOrDefaultAsync();
         }
 
-        public void Remove(T entity)
+        public async Task Remove(T entity)
         {
             dbSet.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public async Task RemoveRange(IEnumerable<T> entities)
         {
             dbSet.RemoveRange(entities);
+
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             dbSet.Update(entity);
         }

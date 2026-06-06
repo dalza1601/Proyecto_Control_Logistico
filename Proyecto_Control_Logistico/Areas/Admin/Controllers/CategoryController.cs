@@ -38,7 +38,62 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 await _unitOfWork.SaveAsync();
                 AlertTitleTextAndIcon("Categoría creada", "La categoría ha sido creada exitosamente.", TypeIconsNotification.success);
             }
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true, message = "Categoría creada exitosamente." });
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories() {
+            var categories = await _unitOfWork.CategoryRepository.GetAll();
+
+            return Json(new { data = categories.Select(c => _mapper.Map<CategoryDTO>(c)) });
+            //    return Json(new { success = true, message = "Categorías obtenidas exitosamente.", 
+            //        data = categories.Select(c => _mapper.Map<CategoryDTO>(c)) });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound(new { message = "Categoría no encontrada" });
+            }
+            return PartialView("_Edit", _mapper.Map<CategoryDTO>(category));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CategoryDTO categoryDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+                if (category == null)
+                {
+                    return NotFound(new { message = "Categoría no encontrada" });
+                }
+
+                _mapper.Map(categoryDto, category);
+                await _unitOfWork.CategoryRepository.Update(category);
+                await _unitOfWork.SaveAsync();
+                AlertTitleTextAndIcon("Categoría actualizada", "La categoría ha sido actualizada exitosamente.", TypeIconsNotification.success);
+            }
+            return Json(new { success = true, message = "Categoría actualizada exitosamente." });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound(new { message = "Categoría no encontrada" });
+            }
+
+            await _unitOfWork.CategoryRepository.Remove(category);
+            await _unitOfWork.SaveAsync();
+            AlertTitleTextAndIcon("Categoría eliminada", "La categoría ha sido eliminada exitosamente.", TypeIconsNotification.success);
+            return Json(new { success = true, message = "Categoría eliminada exitosamente." });
         }
     }
 }
