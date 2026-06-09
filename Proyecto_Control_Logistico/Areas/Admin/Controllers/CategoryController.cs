@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Application.DTOs;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Domain.Enums;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 using Proyecto_Control_Logistico.UI.MVC.Utils;
+using System.Xml.XPath;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
 {
@@ -44,11 +47,30 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllCategories() {
-            var categories = await _unitOfWork.CategoryRepository.GetAll();
+            var draw = Request.Query["draw"].FirstOrDefault();
+            var searchValue = Request.Query["search[value]"].FirstOrDefault()?.ToLower();
+            var start = Convert.ToInt32(Request.Query["start"].FirstOrDefault());
+            var length = Convert.ToInt32(Request.Query["length"].FirstOrDefault());
 
-            return Json(new { data = categories.Select(c => _mapper.Map<CategoryDTO>(c)) });
-            //    return Json(new { success = true, message = "Categorías obtenidas exitosamente.", 
-            //        data = categories.Select(c => _mapper.Map<CategoryDTO>(c)) });
+            var query = await _unitOfWork.CategoryRepository.GetAll();
+            var recordsTotal = await query.CountAsync();
+
+            if (!string.IsNullOrEmpty(searchValue))
+                query = query.Where(c => EF.Functions.Like(c.Name, $"%{searchValue}%"));
+                //query = query.Where(c => c.Name.ToLower().Contains(searchValue.ToLower()));
+
+            //Liberamos el dbcontext para evitar problemas de tracking y rendimiento
+            var filteredList = await query.ToListAsync();
+
+            var recordsFiltered = filteredList.Count();
+
+            var categories  = filteredList.OrderBy(c => c.Id)
+                .Skip(start)
+                .Take(length)
+                .Select(c => _mapper.Map<CategoryDTO>(c))
+                .ToList();
+            
+            return Json(new { draw = draw, recordsFiltered = recordsFiltered, recordsTotal = recordsTotal, data = categories });
         }
 
         [HttpGet]

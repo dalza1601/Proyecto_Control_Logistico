@@ -26,7 +26,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
             await dbSet.AddRangeAsync(entities);
         }
 
-        public Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string? includeProperties = null)
+        public Task<IQueryable<T>> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string? includeProperties = null)
         {
             var baseQuery = filter != null ? dbSet.Where(filter) : dbSet.AsQueryable();
 
@@ -36,7 +36,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
                 .Aggregate(baseQuery, (current, include) => current.Include(include))
                 : baseQuery;
 
-            return orderBy != null ? Task.FromResult(orderBy(queryWithIncludes).AsEnumerable()) : Task.FromResult(queryWithIncludes.AsEnumerable());
+            return orderBy != null ? Task.FromResult(orderBy(queryWithIncludes).AsNoTracking()) : Task.FromResult(queryWithIncludes.AsNoTracking());
         }
 
         public async Task<T?> GetByIdAsync(int id)

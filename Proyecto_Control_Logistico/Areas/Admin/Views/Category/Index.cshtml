@@ -1,6 +1,4 @@
-﻿@using Proyecto_Control_Logistico.Application.DTOs
-@model IEnumerable<CategoryDTO>
-@{
+﻿@{
     ViewData["Title"] = "Categoria";
 }
 
@@ -43,12 +41,12 @@
 </div>
 
 @section Scripts{
-    <script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <script src="~/lib/data-table/dataTables.js"></script>
+    <script type="text/javascript" src="/lib/toastr/toastr.min.js"></script>
     <script src="~/js/modules/category.js"></script>
 }
 
 @section CSS {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.min.css" />
+    <link rel="stylesheet" href="/lib/data-table/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="/lib/toastr/toastr.min.css" />
 }
