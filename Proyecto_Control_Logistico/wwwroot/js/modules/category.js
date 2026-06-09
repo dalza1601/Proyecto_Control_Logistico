@@ -5,6 +5,8 @@ $(document).ready(function () {
 
 function loadDataTable() {
     datatableCategory = $("#tbCategories").DataTable({
+        "processing": true,
+        "serverSide": true,
         "ajax": {
             "url": "/Admin/Category/GetAllCategories",
             "type": "GET",
