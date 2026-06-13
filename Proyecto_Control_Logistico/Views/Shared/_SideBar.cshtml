@@ -127,6 +127,33 @@
                 <span class="menu-title">Documentation</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/category">
+                <i class="typcn typcn-th-large-outline menu-icon"></i>
+                <span class="menu-title">Categoria</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#client" aria-expanded="false" aria-controls="client">
+                <i class="typcn typcn-user menu-icon"></i>
+                <span class="menu-title">Cliente</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="client">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Admin" asp-controller="Client" asp-action="ClientSiteInConstruction">
+                            <i class="typcn typcn-zoom menu-icon"></i>Buscar compras
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Admin" asp-controller="Client" asp-action="Index">
+                            <i class="typcn typcn-user-add menu-icon"></i> Registrar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
     <ul class="sidebar-legend">
         <li>

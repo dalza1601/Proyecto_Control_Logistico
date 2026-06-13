@@ -15,6 +15,7 @@ namespace Proyecto_Control_Logistico.Domain.Entities
         [MaxLength(250)]
         public string Address { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public bool Active { get; set; }
 
         public ICollection<Sale> Sales { get; set; } = new List<Sale>();
 
