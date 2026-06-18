@@ -13,7 +13,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Inventary> Inventories { get; set; }
+        public DbSet<Inventary> Inventaries { get; set; }
         public DbSet<MovementInventory> MovementInventories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
@@ -21,7 +21,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<WareHouse> WareHouse { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,17 +45,18 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
             modelBuilder.Entity<Supplier>(e =>
             {
                 e.HasKey(c => c.Id);
+                e.HasIndex(s => s.RUC).IsUnique();
             });
             modelBuilder.Entity<Client>(e =>
             {
                 e.HasKey(c => c.Id);
             });
-            modelBuilder.Entity<WareHouse>(e =>
+            modelBuilder.Entity<Warehouse>(e =>
             {
                 e.HasKey(c => c.Id);
                 e.HasMany(x => x.Inventories)
-                .WithOne(x => x.WareHouse)
-                .HasForeignKey(x => x.WareHouseId)
+                .WithOne(x => x.Warehouse)
+                .HasForeignKey(x => x.Id)
                 .OnDelete(DeleteBehavior.Restrict);
             });
             modelBuilder.Entity<Inventary>(e =>
@@ -67,10 +68,13 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                e.HasOne(x => x.WareHouse)
+                e.HasOne(x => x.Warehouse)
                 .WithMany(x => x.Inventories)
-                .HasForeignKey(x => x.WareHouseId)
+                .HasForeignKey(x => x.WarehouseId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasIndex(x => x.ProductId).IsUnique();
+                e.HasIndex(x => x.WarehouseId).IsUnique();
             });
             modelBuilder.Entity<MovementInventory>(e =>
            {
@@ -94,6 +98,8 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasIndex(x => x.NumberOrder).IsUnique();
             });
             modelBuilder.Entity<OrderDetail>(e =>
             {
@@ -112,6 +118,9 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .WithMany( x => x.Sales)
                 .HasForeignKey(x => x.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasIndex(x => x.NumberSale).IsUnique();
+            
             });
             modelBuilder.Entity<SaleDetail>(e =>
             {

@@ -5,7 +5,7 @@ using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
 {
-    public class WareHouseRepository : Repository<WareHouse>, IWareHouseRepository
+    public class WareHouseRepository : Repository<Warehouse>, IWareHouseRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -14,7 +14,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
             _context = context;
         }
 
-        public async Task<WareHouse?> GetWareHouseByNameAsync(string name) => await _context.WareHouse
+        public async Task<Warehouse?> GetWareHouseByNameAsync(string name) => await _context.Warehouses
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Name == name);
     }

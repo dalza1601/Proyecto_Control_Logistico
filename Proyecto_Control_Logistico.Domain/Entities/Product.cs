@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Proyecto_Control_Logistico.Domain.Entities
 {
-    [Index(nameof(Code), IsUnique = true)]
     public class Product : BaseEntity
     {
         [Required]
