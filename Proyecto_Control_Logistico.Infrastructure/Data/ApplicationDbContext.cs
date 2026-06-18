@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Domain.Entities;
+using Proyecto_Control_Logistico.Infrastructure.Seed;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Data
 {
@@ -26,14 +27,15 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             // Category
             modelBuilder.Entity<Category>(e =>
             {
                 e.HasKey(c => c.Id);
 
-                e.HasMany (p => p.Products)
+                e.HasMany (c => c.Products)
                 .WithOne(p => p.Category)
-                .HasForeignKey(p => p.Id)
+                .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);// Restringir eliminación en cascada
             });
             modelBuilder.Entity<Product>(e =>
@@ -122,8 +124,9 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
-            
-          
+
+            CategorySeed.Seed(modelBuilder); // Cargar datos de Categoria
+            ProductSeed.Seed(modelBuilder); // Cargar datos de Producto
         }
 
 

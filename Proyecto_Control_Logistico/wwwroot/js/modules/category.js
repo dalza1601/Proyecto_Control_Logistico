@@ -19,15 +19,17 @@ function loadDataTable() {
             {
                 "data": "id",
                 "render": function (data) {
-                    return `<div class="text-center">
-                                <a onclick=openEditCategoryModal(${data})
-                                class="btn btn-success text-white" style="cursor:pointer; width:100px;">
-                                <i class="far fa-edit"></i>Editar
-                                </a>
-                                &nbsp;
-                                <a onclick=Delete("/Admin/Category/Delete/${data}") 
-                                class="btn btn-danger text-white" style="cursor:pointer; width:100px;">
-                                <i class="far fa-trash-alt"></i>Borrar
+                    return `<div class="row w-100">
+                                <div class="col-6">
+                                    <a onclick=openEditCategoryModal(${data})
+                                    class="btn btn-success text-white btn-sm p-1" style="cursor:pointer; width:50px;">
+                                    <i class="fa-solid fa-pen-to-square"></i>Editar
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a onclick=Delete("/Admin/Category/Delete/${data}") 
+                                    class="btn btn-danger text-white btn-sm p-1" style="cursor:pointer; width:50px;">
+                                    <i class="fa-solid fa-trash"></i>Borrar
                                 </a>
                             </div>`;
                 },

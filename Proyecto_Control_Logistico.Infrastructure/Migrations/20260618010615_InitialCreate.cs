@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Proyecto_Control_Logistico.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class firstmigrate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,7 +63,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -80,9 +82,9 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,7 +103,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -118,7 +120,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -236,7 +238,8 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
@@ -246,15 +249,15 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     UnitMeasure = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_Id",
-                        column: x => x.Id,
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -271,7 +274,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     DateSale = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -291,12 +294,12 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NumberOrder = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumberOrder = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SupplierId = table.Column<int>(type: "int", nullable: false),
                     DateOrder = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -321,7 +324,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     StockAvailable = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -354,7 +357,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     StockAvailable = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Motive = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -380,7 +383,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -412,7 +415,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -430,6 +433,125 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Active", "CreatedAt", "Description", "Name", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bicycles and related equipment", "Bikes", null },
+                    { 2, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bike components and parts", "Components", null },
+                    { 3, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Apparel and accessories", "Clothing", null },
+                    { 4, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bike accessories and gear", "Accessories", null },
+                    { 5, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Educational and reference materials", "Books", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "Active", "CategoryId", "Code", "CreatedAt", "Description", "Name", "PriceCost", "PriceSell", "Stock", "UnitMeasure", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, true, 2, "FR-R92B-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Road Frame - Black, 58", "HL Road Frame - Black, 58", 1059.31m, 1431.5m, 375m, "U", null },
+                    { 2, true, 2, "FR-R92R-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Road Frame - Red, 58", "HL Road Frame - Red, 58", 1059.31m, 1431.5m, 375m, "U", null },
+                    { 3, true, 4, "HL-U509-R", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sport-100 Helmet, Red", "Sport-100 Helmet, Red", 13.0863m, 34.99m, 3m, "U", null },
+                    { 4, true, 4, "HL-U509", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sport-100 Helmet, Black", "Sport-100 Helmet, Black", 13.0863m, 34.99m, 3m, "U", null },
+                    { 5, true, 3, "SO-B909-M", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain Bike Socks, M", "Mountain Bike Socks, M", 3.3963m, 9.5m, 3m, "U", null },
+                    { 6, true, 3, "SO-B909-L", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain Bike Socks, L", "Mountain Bike Socks, L", 3.3963m, 9.5m, 3m, "U", null },
+                    { 7, true, 4, "HL-U509-B", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sport-100 Helmet, Blue", "Sport-100 Helmet, Blue", 13.0863m, 34.99m, 3m, "U", null },
+                    { 8, true, 3, "CA-1098", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "AWC Logo Cap", "AWC Logo Cap", 6.9223m, 8.99m, 3m, "U", null },
+                    { 9, true, 3, "LJ-0192-S", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Long-Sleeve Logo Jersey, S", "Long-Sleeve Logo Jersey, S", 38.4923m, 49.99m, 3m, "U", null },
+                    { 10, true, 3, "LJ-0192-M", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Long-Sleeve Logo Jersey, M", "Long-Sleeve Logo Jersey, M", 38.4923m, 49.99m, 3m, "U", null },
+                    { 11, true, 3, "LJ-0192-L", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Long-Sleeve Logo Jersey, L", "Long-Sleeve Logo Jersey, L", 38.4923m, 49.99m, 3m, "U", null },
+                    { 12, true, 3, "LJ-0192-X", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Long-Sleeve Logo Jersey, XL", "Long-Sleeve Logo Jersey, XL", 38.4923m, 49.99m, 3m, "U", null },
+                    { 13, true, 2, "FR-R92R-62", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Road Frame - Red, 62", "HL Road Frame - Red, 62", 868.6342m, 1431.5m, 375m, "U", null },
+                    { 14, true, 2, "FR-R92R-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Road Frame - Red, 44", "HL Road Frame - Red, 44", 868.6342m, 1431.5m, 375m, "U", null },
+                    { 15, true, 2, "FR-R92R-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Road Frame - Red, 48", "HL Road Frame - Red, 48", 868.6342m, 1431.5m, 375m, "U", null },
+                    { 16, true, 2, "FR-R92R-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Road Frame - Red, 52", "HL Road Frame - Red, 52", 868.6342m, 1431.5m, 375m, "U", null },
+                    { 17, true, 2, "FR-R92R-56", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Road Frame - Red, 56", "HL Road Frame - Red, 56", 868.6342m, 1431.5m, 375m, "U", null },
+                    { 18, true, 2, "FR-R38B-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Black, 58", "LL Road Frame - Black, 58", 204.6251m, 337.22m, 375m, "U", null },
+                    { 19, true, 2, "FR-R38B-60", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Black, 60", "LL Road Frame - Black, 60", 204.6251m, 337.22m, 375m, "U", null },
+                    { 20, true, 2, "FR-R38B-62", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Black, 62", "LL Road Frame - Black, 62", 204.6251m, 337.22m, 375m, "U", null },
+                    { 21, true, 2, "FR-R38R-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Red, 44", "LL Road Frame - Red, 44", 187.1571m, 337.22m, 375m, "U", null },
+                    { 22, true, 2, "FR-R38R-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Red, 48", "LL Road Frame - Red, 48", 187.1571m, 337.22m, 375m, "U", null },
+                    { 23, true, 2, "FR-R38R-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Red, 52", "LL Road Frame - Red, 52", 187.1571m, 337.22m, 375m, "U", null },
+                    { 24, true, 2, "FR-R38R-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Red, 58", "LL Road Frame - Red, 58", 187.1571m, 337.22m, 375m, "U", null },
+                    { 25, true, 2, "FR-R38R-60", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Red, 60", "LL Road Frame - Red, 60", 187.1571m, 337.22m, 375m, "U", null },
+                    { 26, true, 2, "FR-R38R-62", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Red, 62", "LL Road Frame - Red, 62", 187.1571m, 337.22m, 375m, "U", null },
+                    { 27, true, 2, "FR-R72R-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "ML Road Frame - Red, 44", "ML Road Frame - Red, 44", 352.1394m, 594.83m, 375m, "U", null },
+                    { 28, true, 2, "FR-R72R-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "ML Road Frame - Red, 48", "ML Road Frame - Red, 48", 352.1394m, 594.83m, 375m, "U", null },
+                    { 29, true, 2, "FR-R72R-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "ML Road Frame - Red, 52", "ML Road Frame - Red, 52", 352.1394m, 594.83m, 375m, "U", null },
+                    { 30, true, 2, "FR-R72R-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "ML Road Frame - Red, 58", "ML Road Frame - Red, 58", 352.1394m, 594.83m, 375m, "U", null },
+                    { 31, true, 2, "FR-R72R-60", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "ML Road Frame - Red, 60", "ML Road Frame - Red, 60", 352.1394m, 594.83m, 375m, "U", null },
+                    { 32, true, 2, "FR-R38B-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Black, 44", "LL Road Frame - Black, 44", 204.6251m, 337.22m, 375m, "U", null },
+                    { 33, true, 2, "FR-R38B-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Black, 48", "LL Road Frame - Black, 48", 204.6251m, 337.22m, 375m, "U", null },
+                    { 34, true, 2, "FR-R38B-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Road Frame - Black, 52", "LL Road Frame - Black, 52", 204.6251m, 337.22m, 375m, "U", null },
+                    { 35, true, 2, "FR-M94S-42", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Silver, 42", "HL Mountain Frame - Silver, 42", 747.2002m, 1364.5m, 375m, "U", null },
+                    { 36, true, 2, "FR-M94S-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Silver, 44", "HL Mountain Frame - Silver, 44", 706.811m, 1364.5m, 375m, "U", null },
+                    { 37, true, 2, "FR-M94S-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Silver, 48", "HL Mountain Frame - Silver, 48", 706.811m, 1364.5m, 375m, "U", null },
+                    { 38, true, 2, "FR-M94S-46", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Silver, 46", "HL Mountain Frame - Silver, 46", 747.2002m, 1364.5m, 375m, "U", null },
+                    { 39, true, 2, "FR-M94B-42", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Black, 42", "HL Mountain Frame - Black, 42", 739.041m, 1349.6m, 375m, "U", null },
+                    { 40, true, 2, "FR-M94B-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Black, 44", "HL Mountain Frame - Black, 44", 699.0928m, 1349.6m, 375m, "U", null },
+                    { 41, true, 2, "FR-M94B-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Black, 48", "HL Mountain Frame - Black, 48", 699.0928m, 1349.6m, 375m, "U", null },
+                    { 42, true, 2, "FR-M94B-46", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Black, 46", "HL Mountain Frame - Black, 46", 739.041m, 1349.6m, 375m, "U", null },
+                    { 43, true, 2, "FR-M94B-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Black, 38", "HL Mountain Frame - Black, 38", 739.041m, 1349.6m, 375m, "U", null },
+                    { 44, true, 2, "FR-M94S-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Mountain Frame - Silver, 38", "HL Mountain Frame - Silver, 38", 747.2002m, 1364.5m, 375m, "U", null },
+                    { 45, true, 1, "BK-R93R-62", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-150 Red, 62", "Road-150 Red, 62", 2171.2942m, 3578.27m, 75m, "U", null },
+                    { 46, true, 1, "BK-R93R-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-150 Red, 44", "Road-150 Red, 44", 2171.2942m, 3578.27m, 75m, "U", null },
+                    { 47, true, 1, "BK-R93R-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-150 Red, 48", "Road-150 Red, 48", 2171.2942m, 3578.27m, 75m, "U", null },
+                    { 48, true, 1, "BK-R93R-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-150 Red, 52", "Road-150 Red, 52", 2171.2942m, 3578.27m, 75m, "U", null },
+                    { 49, true, 1, "BK-R93R-56", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-150 Red, 56", "Road-150 Red, 56", 2171.2942m, 3578.27m, 75m, "U", null },
+                    { 50, true, 1, "BK-R68R-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-450 Red, 58", "Road-450 Red, 58", 884.7083m, 1457.99m, 75m, "U", null },
+                    { 51, true, 1, "BK-R68R-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-450 Red, 44", "Road-450 Red, 44", 884.7083m, 1457.99m, 75m, "U", null },
+                    { 52, true, 1, "BK-R68R-60", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-450 Red, 60", "Road-450 Red, 60", 884.7083m, 1457.99m, 75m, "U", null },
+                    { 53, true, 1, "BK-R68R-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-450 Red, 48", "Road-450 Red, 48", 884.7083m, 1457.99m, 75m, "U", null },
+                    { 54, true, 1, "BK-R68R-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-450 Red, 52", "Road-450 Red, 52", 884.7083m, 1457.99m, 75m, "U", null },
+                    { 55, true, 1, "BK-R50R-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Red, 58", "Road-650 Red, 58", 486.7066m, 782.99m, 75m, "U", null },
+                    { 56, true, 1, "BK-R50R-60", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Red, 60", "Road-650 Red, 60", 486.7066m, 782.99m, 75m, "U", null },
+                    { 57, true, 1, "BK-R50R-62", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Red, 62", "Road-650 Red, 62", 486.7066m, 782.99m, 75m, "U", null },
+                    { 58, true, 1, "BK-R50R-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Red, 44", "Road-650 Red, 44", 486.7066m, 782.99m, 75m, "U", null },
+                    { 59, true, 1, "BK-R50R-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Red, 48", "Road-650 Red, 48", 486.7066m, 782.99m, 75m, "U", null },
+                    { 60, true, 1, "BK-R50R-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Red, 52", "Road-650 Red, 52", 486.7066m, 782.99m, 75m, "U", null },
+                    { 61, true, 1, "BK-R50B-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Black, 58", "Road-650 Black, 58", 486.7066m, 782.99m, 75m, "U", null },
+                    { 62, true, 1, "BK-R50B-60", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Black, 60", "Road-650 Black, 60", 486.7066m, 782.99m, 75m, "U", null },
+                    { 63, true, 1, "BK-R50B-62", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Black, 62", "Road-650 Black, 62", 486.7066m, 782.99m, 75m, "U", null },
+                    { 64, true, 1, "BK-R50B-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Black, 44", "Road-650 Black, 44", 486.7066m, 782.99m, 75m, "U", null },
+                    { 65, true, 1, "BK-R50B-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Black, 48", "Road-650 Black, 48", 486.7066m, 782.99m, 75m, "U", null },
+                    { 66, true, 1, "BK-R50B-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-650 Black, 52", "Road-650 Black, 52", 486.7066m, 782.99m, 75m, "U", null },
+                    { 67, true, 1, "BK-M82S-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Silver, 38", "Mountain-100 Silver, 38", 1912.1544m, 3399.99m, 75m, "U", null },
+                    { 68, true, 1, "BK-M82S-42", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Silver, 42", "Mountain-100 Silver, 42", 1912.1544m, 3399.99m, 75m, "U", null },
+                    { 69, true, 1, "BK-M82S-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Silver, 44", "Mountain-100 Silver, 44", 1912.1544m, 3399.99m, 75m, "U", null },
+                    { 70, true, 1, "BK-M82S-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Silver, 48", "Mountain-100 Silver, 48", 1912.1544m, 3399.99m, 75m, "U", null },
+                    { 71, true, 1, "BK-M82B-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Black, 38", "Mountain-100 Black, 38", 1898.0944m, 3374.99m, 75m, "U", null },
+                    { 72, true, 1, "BK-M82B-42", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Black, 42", "Mountain-100 Black, 42", 1898.0944m, 3374.99m, 75m, "U", null },
+                    { 73, true, 1, "BK-M82B-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Black, 44", "Mountain-100 Black, 44", 1898.0944m, 3374.99m, 75m, "U", null },
+                    { 74, true, 1, "BK-M82B-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-100 Black, 48", "Mountain-100 Black, 48", 1898.0944m, 3374.99m, 75m, "U", null },
+                    { 75, true, 1, "BK-M68S-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-200 Silver, 38", "Mountain-200 Silver, 38", 1265.6195m, 2319.99m, 75m, "U", null },
+                    { 76, true, 1, "BK-M68S-42", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-200 Silver, 42", "Mountain-200 Silver, 42", 1265.6195m, 2319.99m, 75m, "U", null },
+                    { 77, true, 1, "BK-M68S-46", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-200 Silver, 46", "Mountain-200 Silver, 46", 1265.6195m, 2319.99m, 75m, "U", null },
+                    { 78, true, 1, "BK-M68B-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-200 Black, 38", "Mountain-200 Black, 38", 1251.9813m, 2294.99m, 75m, "U", null },
+                    { 79, true, 1, "BK-M68B-42", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-200 Black, 42", "Mountain-200 Black, 42", 1251.9813m, 2294.99m, 75m, "U", null },
+                    { 80, true, 1, "BK-M68B-46", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-200 Black, 46", "Mountain-200 Black, 46", 1251.9813m, 2294.99m, 75m, "U", null },
+                    { 81, true, 1, "BK-M47B-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-300 Black, 38", "Mountain-300 Black, 38", 598.4354m, 1079.99m, 75m, "U", null },
+                    { 82, true, 1, "BK-M47B-40", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-300 Black, 40", "Mountain-300 Black, 40", 598.4354m, 1079.99m, 75m, "U", null },
+                    { 83, true, 1, "BK-M47B-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-300 Black, 44", "Mountain-300 Black, 44", 598.4354m, 1079.99m, 75m, "U", null },
+                    { 84, true, 1, "BK-M47B-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mountain-300 Black, 48", "Mountain-300 Black, 48", 598.4354m, 1079.99m, 75m, "U", null },
+                    { 85, true, 1, "BK-R89R-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Red, 44", "Road-250 Red, 44", 1518.7864m, 2443.35m, 75m, "U", null },
+                    { 86, true, 1, "BK-R89R-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Red, 48", "Road-250 Red, 48", 1518.7864m, 2443.35m, 75m, "U", null },
+                    { 87, true, 1, "BK-R89R-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Red, 52", "Road-250 Red, 52", 1518.7864m, 2443.35m, 75m, "U", null },
+                    { 88, true, 1, "BK-R89R-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Red, 58", "Road-250 Red, 58", 1554.9479m, 2443.35m, 75m, "U", null },
+                    { 89, true, 1, "BK-R89B-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Black, 44", "Road-250 Black, 44", 1554.9479m, 2443.35m, 75m, "U", null },
+                    { 90, true, 1, "BK-R89B-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Black, 48", "Road-250 Black, 48", 1554.9479m, 2443.35m, 75m, "U", null },
+                    { 91, true, 1, "BK-R89B-52", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Black, 52", "Road-250 Black, 52", 1554.9479m, 2443.35m, 75m, "U", null },
+                    { 92, true, 1, "BK-R89B-58", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-250 Black, 58", "Road-250 Black, 58", 1554.9479m, 2443.35m, 75m, "U", null },
+                    { 93, true, 1, "BK-R64Y-38", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-550-W Yellow, 38", "Road-550-W Yellow, 38", 713.0798m, 1120.49m, 75m, "U", null },
+                    { 94, true, 1, "BK-R64Y-40", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-550-W Yellow, 40", "Road-550-W Yellow, 40", 713.0798m, 1120.49m, 75m, "U", null },
+                    { 95, true, 1, "BK-R64Y-42", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-550-W Yellow, 42", "Road-550-W Yellow, 42", 713.0798m, 1120.49m, 75m, "U", null },
+                    { 96, true, 1, "BK-R64Y-44", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-550-W Yellow, 44", "Road-550-W Yellow, 44", 713.0798m, 1120.49m, 75m, "U", null },
+                    { 97, true, 1, "BK-R64Y-48", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Road-550-W Yellow, 48", "Road-550-W Yellow, 48", 713.0798m, 1120.49m, 75m, "U", null },
+                    { 98, true, 2, "FK-1639", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "LL Fork", "LL Fork", 65.8097m, 148.22m, 375m, "U", null },
+                    { 99, true, 2, "FK-5136", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "ML Fork", "ML Fork", 77.9176m, 175.49m, 375m, "U", null },
+                    { 100, true, 2, "FK-9939", new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "HL Fork", "HL Fork", 101.8936m, 229.49m, 375m, "U", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -499,9 +621,20 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_NumberOrder",
+                table: "Orders",
+                column: "NumberOrder",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_SupplierId",
                 table: "Orders",
                 column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Code",
