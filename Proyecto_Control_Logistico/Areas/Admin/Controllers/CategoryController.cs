@@ -20,9 +20,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = await _unitOfWork.CategoryRepository.GetAll();
-
-            return View(categories.Select(c => _mapper.Map<CategoryDTO>(c)));
+            return View();
         }
 
         public async Task<IActionResult> Create()

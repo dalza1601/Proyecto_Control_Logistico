@@ -1,0 +1,43 @@
+﻿@using Proyecto_Control_Logistico.Infrastructure.Mongo.Documents
+@model CategoryDocument
+@{
+    ViewData["ButtonTitle"] = "Crear Categoría";
+}
+
+<br />
+
+<h3 class="text-center">Crear una Nueva Categoria</h3>
+<br />
+
+<form id="frmCategory" asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="m-4">
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="name"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="name" class="form-control" placeholder="Ingrese nombre articulo" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="description"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="description" class="form-control" placeholder="Ingrese descripción del articulo" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br />
+
+    </div>
+
+    <div class="modal-footer justify-content-center">
+        <partial name="_VistaCrearVolver" />
+    </div>
+
+</form>

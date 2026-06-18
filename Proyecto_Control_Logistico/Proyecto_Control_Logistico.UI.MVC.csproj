@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Proyecto_Control_Logistico.Application\Proyecto_Control_Logistico.Application.csproj" />
+    <ProjectReference Include="..\Proyecto_Control_Logistico.FL.UTIL\Proyecto_Control_Logistico.FL.UTIL.csproj" />
     <ProjectReference Include="..\Proyecto_Control_Logistico.Infrastructure\Proyecto_Control_Logistico.Infrastructure.csproj" />
   </ItemGroup>
 
