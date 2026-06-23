@@ -32,7 +32,6 @@ builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
 
-
 //Agregamos el orquestador que es UnitOfWork EF
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(cfg =>
