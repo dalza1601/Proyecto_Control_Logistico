@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Proyecto_Control_Logistico.Domain.Entities
 {
-    [Index(nameof(NumberOrder), IsUnique = true)]
     public class Order : BaseEntity
     {
         public string NumberOrder{ get; set; } = string.Empty;

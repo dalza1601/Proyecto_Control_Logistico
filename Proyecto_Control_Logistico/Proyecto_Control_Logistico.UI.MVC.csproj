@@ -4,7 +4,6 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-Proyecto_Control_Logistico-f23cd946-3e49-4c9a-9dbe-7ae95646e848</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Proyecto_Control_Logistico.Application\Proyecto_Control_Logistico.Application.csproj" />
+    <ProjectReference Include="..\Proyecto_Control_Logistico.FL.UTIL\Proyecto_Control_Logistico.FL.UTIL.csproj" />
     <ProjectReference Include="..\Proyecto_Control_Logistico.Infrastructure\Proyecto_Control_Logistico.Infrastructure.csproj" />
   </ItemGroup>
 

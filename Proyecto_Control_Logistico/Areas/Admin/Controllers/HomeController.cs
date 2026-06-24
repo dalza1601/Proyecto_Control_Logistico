@@ -1,44 +1,98 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Proyecto_Control_Logistico.Domain;
-using Proyecto_Control_Logistico.Domain.Enums;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
+using Proyecto_Control_Logistico.FL.UTIL.Excel.Models;
+using Proyecto_Control_Logistico.Infrastructure.Mongo.Documents;
+using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories.Interfaces;
 using Proyecto_Control_Logistico.Models;
-using Proyecto_Control_Logistico.UI.MVC.Utils;
 using System.Diagnostics;
 
 namespace Proyecto_Control_Logistico.Areas.Admin.Controllers
 {
     [Area("Admin")]
 
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
-        public HomeController(IUnitOfWork unitOfWork, ILogger<BaseController> logger, IMapper mapper) : base(unitOfWork, logger, mapper)
+        protected readonly IMongoUnitOfWork _unitOfWork;
+        private readonly IExcelService _excelService;
+
+        public HomeController(IMongoUnitOfWork unitOfWork, IExcelService excelService)
         {
+            _unitOfWork = unitOfWork;
+            _excelService = excelService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> ExportExcel()
         {
-            //return Content("{\"message\": \"Hello, World!\"}", "application/json");
-            //return Content("<h1>Hello, World!</h1>", "text/html");
-            //JObject json = new JObject();
-            //json.Add("message", "Hello, World!");
-            //return Json(json);
+            var categories = await _unitOfWork.MongoCategoryRepository.GetAllAsync();
 
-            //return Content("<product> Laptop </product>", "application/xml");
-            //return File();
-            //return Redirect();
-            //return NotFound();
+            var columns = new List<ExcelColumn<CategoryDocument>> {
+                new() { Header = "Id", ValueSelector = x => x.Id},
+                new() { Header = "Name", ValueSelector = x => x.name},
+                new() { Header = "Description", ValueSelector = x => x.description}
+            };
 
-            //Alert("Bienvenido al panel de administración", NotificationType.sucess);
-            //AlertDraggable("Bienvenido al panel de administración", TypeIconsNotification.success);
-            //AlertTitleTextAndIcon("Bienvenido al panel de administración", "Gracias por utilizar nuestro sistema.", TypeIconsNotification.question);
-            //AlertErrorWithFooter(string.Format("Bienvenido al panel de administración"), TypeIconsNotification.error, "Gracias por utilizar nuestro sistema.");
-            //AlertWithImage("https://cdn-icons-png.flaticon.com/512/190/190411.png", 100, "Bienvenido");
-            //AlertDeleteYesOrNot();
-            //Alert(Constants.TypeErrors[TypeIconsNotification.error.ToString()], NotificationType.error);
+            var fileBytes = await _excelService.ExportToExcel(categories, "Categorias", columns);
+
+            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteCategoria.xlsx");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+
+            var extension = Path.GetExtension(file.FileName);
+            if (extension != ".xlsx")
+            {
+                return BadRequest("Solo se permiten archivos .xlsx");
+            }
+
+            if (file == null || file.Length == 0)
+                return BadRequest("Debe seleccionar un archivo");
+
+            using var stream = file.OpenReadStream();
+
+            var categories = _excelService.ImportFromExcel<CategoryDocument>(stream, new List<ExcelImportColumn<CategoryDocument>>() {
+            new() {
+                Header = "Id",
+                SetValue = (x,value) => x.Id = value?.ToString() ?? string.Empty
+            },
+            new() {
+                Header = "Name",
+                SetValue = (x,value) => x.name = value?.ToString() ?? string.Empty
+            },
+            new() {
+                Header = "Description",
+                SetValue = (x,value) => x.description = value?.ToString() ?? string.Empty
+            }
+            });
+
+            return Json(categories);
+        }
+
+        public async Task<IActionResult> Index()
+        {
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            return Json(new { data = await _unitOfWork.MongoCategoryRepository.GetAllAsync() });
+        }
+        public async Task<IActionResult> Create()
+        {
+            var category = new CategoryDocument();
+            return PartialView("_Create", category);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryDocument categoryDto)
+        {
+            if (ModelState.IsValid)
+            {
+                await _unitOfWork.MongoCategoryRepository.AddAsync(categoryDto);
+            }
+            return Json(new { success = true, message = "Categoría creada exitosamente." });
         }
 
         public IActionResult Saludo(string nombre)
@@ -52,15 +106,10 @@ namespace Proyecto_Control_Logistico.Areas.Admin.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Crear(Producto producto)
-        //{
-        //    return Content("Producto guardado");
-        //}
-
         public IActionResult Privacy()
         {
-            if (ModelState.IsValid) { 
+            if (ModelState.IsValid)
+            {
             }
 
             return View();

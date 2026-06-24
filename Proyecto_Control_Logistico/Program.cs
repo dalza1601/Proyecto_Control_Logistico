@@ -2,7 +2,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Application.Mapping;
 using Proyecto_Control_Logistico.Domain.Entities;
+using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
+using Proyecto_Control_Logistico.FL.UTIL.Excel.Services;
 using Proyecto_Control_Logistico.Infrastructure.Data;
+using Proyecto_Control_Logistico.Infrastructure.Mongo;
+using Proyecto_Control_Logistico.Infrastructure.Mongo.Mappings;
+using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories;
+using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories.Interfaces;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.Repository;
 
@@ -19,10 +25,15 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
     .AddDefaultUI();
 
 builder.Services.AddControllersWithViews();
+//Configuracion MongoDB
+MongoClassMap.RegisterMappings();
+builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoSettings"));
+builder.Services.AddSingleton<MongoDbContext>();
+builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
+builder.Services.AddScoped<IExcelService, ExcelService>();
 
-//Agregamos el orquestador que es UnitOfWork
+//Agregamos el orquestador que es UnitOfWork EF
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile(new MappingHelper());

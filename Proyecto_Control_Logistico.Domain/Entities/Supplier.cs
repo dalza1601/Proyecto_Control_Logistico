@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Proyecto_Control_Logistico.Domain.Entities
 {
-    [Index(nameof(RUC), IsUnique = true)]
     public class Supplier: BaseEntity
     {
         [Required]

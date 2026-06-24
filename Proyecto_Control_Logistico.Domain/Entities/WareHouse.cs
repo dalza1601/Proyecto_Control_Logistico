@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Proyecto_Control_Logistico.Domain.Entities
 {
-    public class WareHouse: BaseEntity
+    public class Warehouse: BaseEntity
     {
         [Required]
         [MaxLength(100)]
