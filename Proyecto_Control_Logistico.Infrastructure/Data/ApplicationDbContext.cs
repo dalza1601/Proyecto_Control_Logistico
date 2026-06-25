@@ -4,7 +4,7 @@ using Proyecto_Control_Logistico.Domain.Entities;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
