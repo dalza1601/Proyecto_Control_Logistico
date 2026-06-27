@@ -5,51 +5,46 @@
 }
 
 <br />
-
 <h3 class="text-center">Actualizar datos del cliente</h3>
 <br />
 
-<form id="frmClient" asp-action="Edit" method="post">
+<form class="p-2" id="frmClient" asp-action="Edit" method="post">
     <input type="hidden" asp-for="Document" />    
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="col offset-1 mt-4">
-        <div class="form-group row">
-            <div class="col-4">
+    <div class="mt-4">
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
                 <label asp-for="FullName"></label>
             </div>
-            <div class="col-8">
-                <input required name="FullName" asp-for="FullName" class="from-control" placeholder="Ingrese nombre completo del cliente" />
+            <div class="col-9 p-1">
+                <input required name="FullName" asp-for="FullName" class="form-control" placeholder="Ingrese nombre completo del cliente" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
         </div>
         <br />
-        <div class="form-group row">
-            <div class="col-4">
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
                 <label asp-for="Phone"></label>
             </div>
-            <div class="col-8">
-                <input required name="Phone" asp-for="Phone" class="from-control" placeholder="Ingrese teléfono del cliente" />
+            <div class="col-9 p-1">
+                <input required name="Phone" asp-for="Phone" class="form-control" placeholder="Ingrese teléfono del cliente" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
         </div>
         <br />
         <div class="form-group row">
-            <div class="col-4">
+            <div class="col-3 col-form-label">
                 <label asp-for="Email"></label>
             </div>
-            <div class="col-8">
-                <input required name="Email" asp-for="Email" class="from-control" placeholder="Ingrese e-mail del cliente" />
+            <div class="col-9 p-1">
+                <input required name="Email" asp-for="Email" class="form-control" placeholder="Ingrese e-mail del cliente" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
         </div>
     </div>
 
-    <div class="modal-footer">
-        <div class="form-group-row">
-            <div class="col-8">
-                <partial name="_VistaCrearVolver" />
-            </div>
-        </div>
+    <div class="modal-footer justify-content-center">
+        <partial name="_VistaCrearVolver" />
     </div>
 
 </form>

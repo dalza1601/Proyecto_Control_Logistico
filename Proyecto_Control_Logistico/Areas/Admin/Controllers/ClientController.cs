@@ -51,7 +51,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
             var start = Convert.ToInt32(Request.Query["start"].FirstOrDefault());
             var length = Convert.ToInt32(Request.Query["length"].FirstOrDefault());
 
-            var query = await _unitOfWork.ClientRepository.GetAll();
+            var query = await _unitOfWork.ClientRepository.GetAll(filter: Client => Client.Active);
             var recordsTotal = await query.CountAsync();
 
             if (!string.IsNullOrEmpty(searchValue))
@@ -63,7 +63,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
 
             var recordsFiltered = filteredList.Count();
 
-            var clients = filteredList.Where(x=>x.Active)
+            var clients = filteredList.Where(x => x.Active)
                 .OrderBy(c => c.Id)
                 .Skip(start)
                 .Take(length)
@@ -71,6 +71,46 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 .ToList();
 
             return Json(new { draw = draw, recordsFiltered = recordsFiltered, recordsTotal = recordsTotal, data = clients });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var client = await _unitOfWork.ClientRepository.GetByDniAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            var clientDTO = _mapper.Map<ClientDTO>(client);
+            return PartialView("_Edit", clientDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, ClientDTO clientDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = _mapper.Map<Client>(clientDTO);
+                await _unitOfWork.ClientRepository.Update(client);
+                await _unitOfWork.SaveAsync();
+                AlertTitleTextAndIcon("Cliente actualizado", "El cliente ha sido actualizado exitosamente.", TypeIconsNotification.success);
+            }
+            return Json(new { success = true, message = "Cliente actualizado exitosamente." });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var client = await _unitOfWork.ClientRepository.GetByIdAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            client.Active = false;
+            await _unitOfWork.ClientRepository.Update(client);
+            await _unitOfWork.SaveAsync();
+            AlertTitleTextAndIcon("Cliente deshabilitado", "El cliente ha sido deshabilitado exitosamente.", TypeIconsNotification.success);
+            return Json(new { success = true, message = "Cliente deshabilitado exitosamente." });
         }
     }
 }
