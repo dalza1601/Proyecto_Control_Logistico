@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto_Control_Logistico.Domain.Enums;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Models;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Documents;
@@ -9,7 +11,8 @@ using System.Diagnostics;
 namespace Proyecto_Control_Logistico.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
+    [Authorize(Roles = "Seller,Supplier,User")]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         protected readonly IMongoUnitOfWork _unitOfWork;

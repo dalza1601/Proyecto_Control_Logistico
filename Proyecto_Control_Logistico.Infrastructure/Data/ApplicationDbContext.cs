@@ -5,7 +5,7 @@ using Proyecto_Control_Logistico.Infrastructure.Seed;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }

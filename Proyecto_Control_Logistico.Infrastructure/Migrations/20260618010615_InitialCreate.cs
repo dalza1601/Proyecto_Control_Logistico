@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Proyecto_Control_Logistico.Infrastructure.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:Proyecto_Control_Logistico.Infrastructure/Migrations/20260618010615_InitialCreate.cs
     public partial class InitialCreate : Migration
+========
+    public partial class Addfirstmigratge : Migration
+>>>>>>>> 6c3c5c58eb8089af8634ed5d2c4686062a0fc995:Proyecto_Control_Logistico.Infrastructure/Migrations/20260625024853_Addfirstmigratge.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,8 +36,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -112,7 +115,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WareHouse",
+                name: "Warehouses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -125,7 +128,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WareHouse", x => x.Id);
+                    table.PrimaryKey("PK_Warehouses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -314,13 +317,13 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Inventories",
+                name: "Inventaries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    WareHouseId = table.Column<int>(type: "int", nullable: false),
+                    WarehouseId = table.Column<int>(type: "int", nullable: false),
                     StockAvailable = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -329,17 +332,17 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Inventories", x => x.Id);
+                    table.PrimaryKey("PK_Inventaries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Inventories_Products_ProductId",
+                        name: "FK_Inventaries_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Inventories_WareHouse_WareHouseId",
-                        column: x => x.WareHouseId,
-                        principalTable: "WareHouse",
+                        name: "FK_Inventaries_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
+                        principalTable: "Warehouses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -594,15 +597,15 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inventories_ProductId",
-                table: "Inventories",
+                name: "IX_Inventaries_ProductId",
+                table: "Inventaries",
                 column: "ProductId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inventories_WareHouseId",
-                table: "Inventories",
-                column: "WareHouseId",
+                name: "IX_Inventaries_WarehouseId",
+                table: "Inventaries",
+                column: "WarehouseId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -689,7 +692,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Inventories");
+                name: "Inventaries");
 
             migrationBuilder.DropTable(
                 name: "MovementInventories");
@@ -707,7 +710,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "WareHouse");
+                name: "Warehouses");
 
             migrationBuilder.DropTable(
                 name: "Orders");
