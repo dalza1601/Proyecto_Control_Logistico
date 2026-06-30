@@ -1,0 +1,43 @@
+﻿@using Proyecto_Control_Logistico.Application.DTOs
+@model SaleDTO
+@{
+    ViewData["ButtonTitle"] = "Crear Venta";
+}
+
+<br />
+
+<h3 class="text-center">Crear una Nueva Venta</h3>
+<br />
+
+<form id="frmSale" asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="m-4">
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="NumberSale"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="NumberSale" class="form-control" placeholder="Ingrese número de venta" />
+                <span asp-validation-for="NumberSale" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="TotalAmount"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="TotalAmount" class="form-control" placeholder="Ingrese monto total" />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br />
+
+    </div>
+
+    <div class="modal-footer justify-content-center">
+        <partial name="_VistaCrearVolver" />
+    </div>
+
+</form>
