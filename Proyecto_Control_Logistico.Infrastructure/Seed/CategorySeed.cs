@@ -8,19 +8,19 @@ namespace Proyecto_Control_Logistico.Infrastructure.Seed
         public static void Seed(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1,Name = "Bikes", Description = "Bicycles and related equipment" },
-                new Category { Id = 2,Name = "Components", Description = "Bike components and parts" },
-                new Category { Id = 3,Name = "Clothing", Description = "Apparel and accessories" },
-                new Category { Id = 4,Name = "Accessories", Description = "Bike accessories and gear" },
-                new Category { Id = 5,Name = "Books", Description = "Educational and reference materials" },
-                new Category { Id = 6, Name = "Foods", Description = "Any substance that can be consumed" },
-                new Category { Id = 7, Name = "Drinks", Description = "Beverages and liquids" },
-                new Category { Id = 8, Name = "Jewelry", Description = "Decorative items and accessories" },
-                new Category { Id = 9, Name = "Technology", Description = "Electronic devices and gadgets" },
-                new Category { Id = 10, Name = "Medicaments", Description = "Medical drugs and treatments" },
-                new Category { Id = 11, Name = "Cosmetics", Description = "Personal care and beauty products" },
-                new Category { Id = 12, Name = "Garden", Description = "Plants and gardening supplies" },
-                new Category { Id = 13, Name = "Furniture", Description = "Furniture and home decor" }
+                new Category { Id = 1,Name = "Bicicletas", Description = "Bicicletas y accesorios" },
+                new Category { Id = 2,Name = "Componentes", Description = "Componentes de bicicletas" },
+                new Category { Id = 3,Name = "Ropa", Description = "Ropa y accesorios" },
+                new Category { Id = 4,Name = "Accesorios", Description = "Accesorios para bicicletas" },
+                new Category { Id = 5,Name = "Libros", Description = "Materiales educativos y de referencia" },
+                new Category { Id = 6, Name = "Comidas", Description = "Cualquier sustancia que pueda ser consumida" },
+                new Category { Id = 7, Name = "Bebidas", Description = "Bebidas y líquidos" },
+                new Category { Id = 8, Name = "Joyas", Description = "Accesorios de joyería" },
+                new Category { Id = 9, Name = "Tecnología", Description = "Dispositivos electrónicos y accesorios" },
+                new Category { Id = 10, Name = "Medicamentos", Description = "Medicamentos y tratamientos médicos" },
+                new Category { Id = 11, Name = "Cosméticos", Description = "Productos de cuidado personal y belleza" },
+                new Category { Id = 12, Name = "Jardinería", Description = "Plantas y suministros de jardinería" },
+                new Category { Id = 13, Name = "Muebles", Description = "Muebles y decoración para el hogar" }
             );
         }
     }
