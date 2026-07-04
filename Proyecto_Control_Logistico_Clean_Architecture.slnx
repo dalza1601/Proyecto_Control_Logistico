@@ -4,7 +4,5 @@
   <Project Path="Proyecto_Control_Logistico.FL.UTIL/Proyecto_Control_Logistico.FL.UTIL.csproj" Id="94209f9b-e7ee-4b83-8caa-eb8843e186ea" />
   <Project Path="Proyecto_Control_Logistico.Infrastructure/Proyecto_Control_Logistico.Infrastructure.csproj" Id="29effe3f-152f-4b1c-8686-b773882adccb" />
   <Project Path="Proyecto_Control_Logistico.Tests/Proyecto_Control_Logistico.Tests.csproj" Id="bbbf18e3-2d90-4cad-8c83-143cb90aa519" />
-  <Project Path="Proyecto_Control_Logistico/Proyecto_Control_Logistico.UI.MVC.csproj">
-    <Build Solution="Debug|*" Project="false" />
-  </Project>
+  <Project Path="Proyecto_Control_Logistico/Proyecto_Control_Logistico.UI.MVC.csproj" />
 </Solution>
