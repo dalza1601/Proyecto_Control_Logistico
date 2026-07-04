@@ -1,0 +1,67 @@
+﻿@using Proyecto_Control_Logistico.Application.DTOs
+@model ClientDTO
+@{
+    ViewData["ButtonTitle"] = "Registrar cliente";
+}
+
+<br />
+<h3 class="text-center">Registrar a un nuevo cliente</h3>
+<br />
+<form id="frmClient" asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="m-4">
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Document"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="Document" class="form-control" placeholder="Ingrese el DNI del cliente" />
+                <span asp-validation-for="Document" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="FullName"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="FullName" class="form-control" placeholder="Ingrese el nombre completo del cliente" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Phone"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input asp-for="Phone" class="form-control" placeholder="Ingrese el teléfono del cliente" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Email"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input asp-for="Email" class="form-control" placeholder="Ingrese el e-mail del cliente" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Active"></label>
+            </div>
+            <div class="col-9 p-1">
+                <div class="form-check">
+                    <input asp-for="Active" class="form-check-input" checked/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-center">
+        <partial name="_VistaCrearVolver" />
+    </div>
+</form>

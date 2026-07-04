@@ -1,36 +1,47 @@
-﻿var datatableCategory;
+﻿var dataTableClient;
 $(document).ready(function () {
     loadDataTable();
 });
 
 function loadDataTable() {
-    datatableCategory = $("#tbCategories").DataTable({
+    dataTableClient = $("#tblClients").DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "/Admin/Category/GetAllCategories",
+            "url": "/Admin/Client/GetAllClients",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "id", "width": "10%" },
-            { "data": "name", "width": "30%" },
-            { "data": "description", "width": "50%" },
             {
-                "data": "id",
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "render": function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                },
+                "width": "10%"
+            },
+            { "data": "document", "name": "document", "width": "10%" },
+            { "data": "fullName", "name": "fullName", "width": "25%" },
+            { "data": "phone", "name": "phone", "width": "20%" },
+            { "data": "email", "name": "email", "width": "20%" },
+            {
+                "data": "document",
                 "render": function (data) {
                     return `<div class="row w-100">
                                 <div class="col-6">
-                                    <a onclick=openEditCategoryModal(${data})
+                                    <a onclick=openEditClientModal(${data})
                                     class="btn btn-success text-white btn-sm p-1" style="cursor:pointer; width:50px;">
                                     <i class="fa-solid fa-pen-to-square"></i>Editar
                                     </a>
                                 </div>
                                 <div class="col-6">
-                                    <a onclick=Delete("/Admin/Category/Delete/${data}") 
+                                    <a onclick=Delete("/Admin/Client/Delete/${data}") 
                                     class="btn btn-danger text-white btn-sm p-1" style="cursor:pointer; width:50px;">
                                     <i class="fa-solid fa-trash"></i>Borrar
-                                </a>
+                                    </a>
+                                </div>
                             </div>`;
                 },
                 "width": "50%"
@@ -38,7 +49,7 @@ function loadDataTable() {
         ],
         "language": {
             "decimal": "",
-            "emptyTable": "No hay registros de categorías",
+            "emptyTable": "No hay registros de clientes",
             "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
             "infoEmpty": "Mostrando 0 a 0 de 0 Entradas",
             "infoFiltered": "(Filtrado de _MAX_ total entradas)",
@@ -57,22 +68,22 @@ function loadDataTable() {
             }
         },
         "width": "100%"
-    })
-}
-
-function openModalCategory() {
-    $.get("/Admin/Category/Create", function (response) {
-        $("#categoryModalContent").html(response);
     });
 }
 
-function openEditCategoryModal(id) {
+function openModalClient() {
+    $.get("/Admin/Client/Create", function (response) {
+        $("#clientModalContent").html(response);
+    });
+}
+
+function openEditClientModal(id) {
     $.ajax({
-        url: "/Admin/Category/Edit/" + id,
+        url: "/Admin/Client/Edit/" + id,
         type: "GET",
         success: function (response) {
-            $("#categoryModalContent").html(response);
-            $("#categoryModal").modal("show");
+            $("#clientModalContent").html(response);
+            $("#clientModal").modal("show");
         },
         error: function (error) {
             toastr.error(error.responseJSON.message);
@@ -82,13 +93,13 @@ function openEditCategoryModal(id) {
 
 function Delete(url) {
     Swal.fire({
-        title: "Esta seguro de borrar?",
-        "text": "Este contenido no se puede recuperar",
+        title: "Esta seguro de deshabilitar al cliente?",
+        "text": "No podra realizar ninguna operacion con este cliente",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si, borrar!",
+        confirmButtonText: "Si, deshabilitar!",
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
@@ -97,8 +108,8 @@ function Delete(url) {
                 success: function (data) {
                     datatableCategory.ajax.reload(null, false);
                     Swal.fire({
-                        title: "Eliminado!",
-                        text: "Se elimino la categoria con exito.",
+                        title: "Deshabilitado!",
+                        text: "Se deshabilito el cliente con exito.",
                         icon: "success"
                     });
                     toastr.success(data.message);
@@ -108,20 +119,20 @@ function Delete(url) {
                 }
             })
 
-        } 
+        }
     });
 }
 
-$(document).on("submit", "#frmCategory", function (event) {
-    event.preventDefault();//no permite que recarge la pagina
+$(document).on("submit", "#frmClient", function (event) {
+    event.preventDefault();
     $.ajax({
         url: $(this).attr("action"),
-        type: $(this).attr("method"),//"POST"
+        type: $(this).attr("method"),
         data: $(this).serialize(),
         success: function (response) {
             if (response.success) {
-                $("#categoryModal").modal("hide");
-                datatableCategory.ajax.reload(null, false);
+                $("#clientModal").modal("hide");
+                dataTableClient.ajax.reload(null, false);
                 toastr.success(response.message);
             }
         },
