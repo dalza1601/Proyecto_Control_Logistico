@@ -15,6 +15,11 @@ Características principales
 Requisitos
 ---------
 - .NET 10 SDK
+- [LibMan CLI](https://learn.microsoft.com/aspnet/core/client-side/libman/libman-cli) para gestionar librerías cliente (Chart.js)
+```bash
+dotnet tool install -g Microsoft.Web.LibraryManager.Cli
+```
+
 - Visual Studio 2022/2024/2026 o VS Code
 - (Opcional) SQL Server / PostgreSQL u otra base de datos soportada
 - (Opcional) Docker si se desea contenerizar
@@ -28,6 +33,7 @@ Instalación y ejecución local
 
 2. Restaurar paquetes y compilar:
 
+   libman restore      # descarga Chart.js (y cualquier otra librería) definida en libman.json
    dotnet restore
    dotnet build
 
