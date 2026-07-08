@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
+namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
 {
     public interface IRepository<T> where T : class
     {

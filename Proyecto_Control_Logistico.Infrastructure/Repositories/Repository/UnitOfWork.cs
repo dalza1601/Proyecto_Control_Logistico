@@ -1,5 +1,5 @@
 using Proyecto_Control_Logistico.Infrastructure.Data;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
 {
@@ -19,7 +19,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
 
         public IInventoryRepository InventoryRepository { get; private set; }
 
-        public IMovementInventory MovementInventory { get; private set; }
+        public IMovementInventoryRepository MovementInventory { get; private set; }
 
         public IOrderRepository OrderRepository { get; private set; }               
 

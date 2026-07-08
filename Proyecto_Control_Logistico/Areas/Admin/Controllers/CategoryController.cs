@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Application.DTOs;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Domain.Enums;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.UI.MVC.Utils;
 using System.Xml.XPath;
 using static System.Runtime.InteropServices.JavaScript.JSType;

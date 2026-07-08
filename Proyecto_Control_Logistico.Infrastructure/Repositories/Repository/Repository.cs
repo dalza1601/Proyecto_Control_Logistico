@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Infrastructure.Data;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using System.Linq.Expressions;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
