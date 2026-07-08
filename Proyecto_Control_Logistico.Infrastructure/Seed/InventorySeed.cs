@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Proyecto_Control_Logistico.Domain.Entities;
+﻿using Proyecto_Control_Logistico.Domain.Entities;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Seed
 {
     public static class InventorySeed
     {
-        public static void Seed(ModelBuilder modelBuilder)
+        public static List<Inventary> Get()
         {
-            modelBuilder.Entity<Inventary>().HasData(
+            return new List<Inventary>
+            {
                 new Inventary { Id = 1, ProductId = 1, WarehouseId = 1, StockAvailable = 9 },
                 new Inventary { Id = 2, ProductId = 1, WarehouseId = 2, StockAvailable = 3 },
                 new Inventary { Id = 3, ProductId = 1, WarehouseId = 3, StockAvailable = 1 },
@@ -505,7 +505,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Seed
                 new Inventary { Id = 495, ProductId = 130, WarehouseId = 2, StockAvailable = 3 },
                 new Inventary { Id = 496, ProductId = 130, WarehouseId = 3, StockAvailable = 3 },
                 new Inventary { Id = 497, ProductId = 130, WarehouseId = 4, StockAvailable = 4 }
-            );
+            };
         }
     }
 }

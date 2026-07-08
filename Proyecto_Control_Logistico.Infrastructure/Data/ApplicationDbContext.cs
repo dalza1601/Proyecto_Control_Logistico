@@ -133,13 +133,6 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
-            CategorySeed.Seed(modelBuilder); // Cargar datos de Categoria
-            ProductSeed.Seed(modelBuilder); // Cargar datos de Producto
-            InventorySeed.Seed(modelBuilder); // Cargar datos de Inventario
-            MovementInventorySeed.Seed(modelBuilder); // Cargar datos de Movimiento de Inventario
-            WareHouseSeed.Seed(modelBuilder); // Cargar datos de Almacén
         }
-
-
     }
 }

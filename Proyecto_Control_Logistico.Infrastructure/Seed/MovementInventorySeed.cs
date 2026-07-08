@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Proyecto_Control_Logistico.Domain.Entities;
+﻿using Proyecto_Control_Logistico.Domain.Entities;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Seed
 {
     public static class MovementInventorySeed
     {
-        public static void Seed(ModelBuilder modelBuilder)
+        public static List<MovementInventory> Get()
         {
-            modelBuilder.Entity<MovementInventory>().HasData(
+            return new List<MovementInventory>
+            {
                 new MovementInventory { Id = 1, ProductId = 1, WareHouseId = 1, MovementType = "Entrada", Quantity = 9, LastStock = 0, StockAvailable = 9, Motive = "Compra de productos" },
                 new MovementInventory { Id = 2, ProductId = 1, WareHouseId = 2, MovementType = "Entrada", Quantity = 3, LastStock = 0, StockAvailable = 3, Motive = "Compra de productos" },
                 new MovementInventory { Id = 3, ProductId = 1, WareHouseId = 3, MovementType = "Entrada", Quantity = 1, LastStock = 0, StockAvailable = 1, Motive = "Compra de productos" },
@@ -505,7 +505,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Seed
                 new MovementInventory { Id = 495, ProductId = 130, WareHouseId = 2, MovementType = "Entrada", Quantity = 3, LastStock = 0, StockAvailable = 3, Motive = "Compra de productos" },
                 new MovementInventory { Id = 496, ProductId = 130, WareHouseId = 3, MovementType = "Entrada", Quantity = 3, LastStock = 0, StockAvailable = 3, Motive = "Compra de productos" },
                 new MovementInventory { Id = 497, ProductId = 130, WareHouseId = 4, MovementType = "Entrada", Quantity = 4, LastStock = 0, StockAvailable = 4, Motive = "Compra de productos" }
-            );
+            };
         }
     }
 }

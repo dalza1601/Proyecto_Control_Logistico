@@ -13,6 +13,7 @@ using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories.Interfaces;
 using Proyecto_Control_Logistico.Infrastructure.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.Repository;
+using Proyecto_Control_Logistico.Infrastructure.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,13 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 var app = builder.Build();
+
+// Agregamos el orquestador de Seeders
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    DbInitializer.Initialize(db);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
