@@ -61,12 +61,12 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .HasForeignKey(x => x.Id)
                 .OnDelete(DeleteBehavior.Restrict);
             });
-            modelBuilder.Entity<Inventary>(e =>
+             modelBuilder.Entity<Inventary>(e =>
             {
                 e.HasKey(c => c.Id);
 
                 e.HasOne(x => x.Product)
-                .WithMany()
+                .WithMany(x => x.Inventories)
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -75,8 +75,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .HasForeignKey(x => x.WarehouseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                e.HasIndex(x => x.ProductId).IsUnique();
-                e.HasIndex(x => x.WarehouseId).IsUnique();
+                e.HasIndex(x => new {x.ProductId, x.WarehouseId}).IsUnique();
             });
             modelBuilder.Entity<MovementInventory>(e =>
            {
@@ -134,10 +133,6 @@ namespace Proyecto_Control_Logistico.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
-            CategorySeed.Seed(modelBuilder); // Cargar datos de Categoria
-            ProductSeed.Seed(modelBuilder); // Cargar datos de Producto
         }
-
-
     }
 }

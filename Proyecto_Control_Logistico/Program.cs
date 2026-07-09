@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.Application.Mapping;
+using Proyecto_Control_Logistico.Application.UseCase;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Services;
@@ -9,8 +11,9 @@ using Proyecto_Control_Logistico.Infrastructure.Mongo;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Mappings;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories.Interfaces;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Infrastructure.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.Repository;
+using Proyecto_Control_Logistico.Infrastructure.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,12 @@ builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
 
+// Agregamos los casos de uso de la capa Application
+builder.Services.AddApplicationServices();
+
+// Agregamos los repositorios de la capa Infrastructure
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
 //Agregamos el orquestador que es UnitOfWork EF
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(cfg =>
@@ -55,6 +64,13 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 var app = builder.Build();
+
+// Agregamos el orquestador de Seeders
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    DbInitializer.Initialize(db);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

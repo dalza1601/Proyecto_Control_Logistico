@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Infrastructure.Data;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
@@ -44,6 +44,13 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
         {
             return await _context.Products
                 .AnyAsync(x => x.Code == code);
+        }
+        public async Task<int> ActiveProductsCountAsync()
+        {
+            return await _context.Products
+                .Where(x => x.Active)
+                .AsNoTracking()
+                .CountAsync();
         }
     }
 }

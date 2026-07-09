@@ -1,6 +1,6 @@
 ﻿using Proyecto_Control_Logistico.Domain.Entities;
 
-namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
+namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
 {
     public interface IOrderRepository : IRepository<Order>
     {

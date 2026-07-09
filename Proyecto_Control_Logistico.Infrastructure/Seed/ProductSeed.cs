@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Proyecto_Control_Logistico.Domain.Entities;
+﻿using Proyecto_Control_Logistico.Domain.Entities;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Seed
 {
     public static class ProductSeed
     {
-        public static void Seed(ModelBuilder modelBuilder)
+        public static List<Product> Get()
         {
-            modelBuilder.Entity<Product>().HasData(
+            return new List<Product>
+            {
                 new Product { Id = 1, Code = "BIK-001", Name = "Mountain Bike", Description = "Mountain Bike", PriceCost = 37.00m, PriceSell = 49.95m, Stock = 17, UnitMeasure = "U", CategoryId = 1, CreatedAt = new DateTime(2026, 6, 17) },
                 new Product { Id = 2, Code = "BIK-002", Name = "Road Bike", Description = "Road Bike", PriceCost = 44.00m, PriceSell = 59.40m, Stock = 24, UnitMeasure = "U", CategoryId = 1, CreatedAt = new DateTime(2026, 6, 17) },
                 new Product { Id = 3, Code = "BIK-003", Name = "Hybrid Bike", Description = "Hybrid Bike", PriceCost = 51.00m, PriceSell = 68.85m, Stock = 31, UnitMeasure = "U", CategoryId = 1, CreatedAt = new DateTime(2026, 6, 17) },
@@ -138,7 +138,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Seed
                 new Product { Id = 128, Code = "FUR-008", Name = "Coffee Table", Description = "Coffee Table", PriceCost = 206.00m, PriceSell = 278.10m, Stock = 96, UnitMeasure = "U", CategoryId = 13, CreatedAt = new DateTime(2026, 6, 17) },
                 new Product { Id = 129, Code = "FUR-009", Name = "TV Stand", Description = "TV Stand", PriceCost = 213.00m, PriceSell = 287.55m, Stock = 13, UnitMeasure = "U", CategoryId = 13, CreatedAt = new DateTime(2026, 6, 17) },
                 new Product { Id = 130, Code = "FUR-010", Name = "Cabinet", Description = "Cabinet", PriceCost = 220.00m, PriceSell = 297.00m, Stock = 20, UnitMeasure = "U", CategoryId = 13, CreatedAt = new DateTime(2026, 6, 17) }
-            );
+            };
         }
     }
 }
