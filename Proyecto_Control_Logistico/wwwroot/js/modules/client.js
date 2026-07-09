@@ -31,6 +31,12 @@ function loadDataTable() {
                 "render": function (data) {
                     return `<div class="row w-100">
                                 <div class="col-6">
+                                    <a onclick=openDetailsClientModal(${data})
+                                    class="btn btn-success text-white btn-sm p-1" style="cursor:pointer; width:50px;">
+                                    <i class="fa-solid fa-pen-to-square"></i>Detalles
+                                    </a>
+                                </div>
+                                <div class="col-6">
                                     <a onclick=openEditClientModal(${data})
                                     class="btn btn-success text-white btn-sm p-1" style="cursor:pointer; width:50px;">
                                     <i class="fa-solid fa-pen-to-square"></i>Editar
@@ -80,6 +86,20 @@ function openModalClient() {
 function openEditClientModal(id) {
     $.ajax({
         url: "/Admin/Client/Edit/" + id,
+        type: "GET",
+        success: function (response) {
+            $("#clientModalContent").html(response);
+            $("#clientModal").modal("show");
+        },
+        error: function (error) {
+            toastr.error(error.responseJSON.message);
+        }
+    });
+}
+
+function openDetailsClientModal(id) {
+    $.ajax({
+        url: "/Admin/Client/Details/" + id,
         type: "GET",
         success: function (response) {
             $("#clientModalContent").html(response);

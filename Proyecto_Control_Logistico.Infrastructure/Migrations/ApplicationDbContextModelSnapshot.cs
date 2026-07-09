@@ -254,6 +254,112 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bicicletas y accesorios",
+                            Name = "Bicicletas"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Componentes de bicicletas",
+                            Name = "Componentes"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Ropa y accesorios",
+                            Name = "Ropa"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Accesorios para bicicletas",
+                            Name = "Accesorios"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Materiales educativos y de referencia",
+                            Name = "Libros"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Cualquier sustancia que pueda ser consumida",
+                            Name = "Comidas"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Bebidas y líquidos",
+                            Name = "Bebidas"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Accesorios de joyería",
+                            Name = "Joyas"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Dispositivos electrónicos y accesorios",
+                            Name = "Tecnología"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Medicamentos y tratamientos médicos",
+                            Name = "Medicamentos"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Productos de cuidado personal y belleza",
+                            Name = "Cosméticos"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Plantas y suministros de jardinería",
+                            Name = "Jardinería"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Active = true,
+                            CreatedAt = new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Muebles y decoración para el hogar",
+                            Name = "Muebles"
+                        });
                 });
 
             modelBuilder.Entity("Proyecto_Control_Logistico.Domain.Entities.Client", b =>
