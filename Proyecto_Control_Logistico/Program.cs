@@ -63,6 +63,14 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile(new MappingHelper());
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;  
+});
+
 var app = builder.Build();
 
 // Agregamos el orquestador de Seeders
@@ -82,7 +90,7 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
