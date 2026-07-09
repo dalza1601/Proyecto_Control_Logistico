@@ -1,8 +1,4 @@
-﻿
-using Proyecto_Control_Logistico.Domain.Entities;
-using Proyecto_Control_Logistico.Infrastructure.Data;
-
-namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
+﻿namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -12,7 +8,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
         IClientRepository ClientRepository { get; }
         IWareHouseRepository WareHouseRepository { get; }
         IInventoryRepository InventoryRepository { get; }
-        IMovementInventory MovementInventory { get; }
+        IMovementInventoryRepository MovementInventory { get; }
         IOrderRepository OrderRepository { get; }
         IOrderDetailRepository OrderDetailRepository { get; }
         ISaleRepository SaleRepository { get; }

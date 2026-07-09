@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_Control_Logistico.Domain;
 using Proyecto_Control_Logistico.Domain.Enums;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 
 namespace Proyecto_Control_Logistico.UI.MVC.Utils
 {

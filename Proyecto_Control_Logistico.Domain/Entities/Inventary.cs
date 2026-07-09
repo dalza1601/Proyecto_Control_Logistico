@@ -7,8 +7,7 @@ namespace Proyecto_Control_Logistico.Domain.Entities
     {
         public int ProductId { get; set; }
         public int WarehouseId { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal StockAvailable { get; set; }
+        public int StockAvailable { get; set; }
         [Required]
         public DateTime LastUpdated { get; set; }
 

@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Seed\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.5" />
@@ -22,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Proyecto_Control_Logistico.Application\Proyecto_Control_Logistico.Application.csproj" />
     <ProjectReference Include="..\Proyecto_Control_Logistico.Domain\Proyecto_Control_Logistico.Domain.csproj" />
   </ItemGroup>
   
