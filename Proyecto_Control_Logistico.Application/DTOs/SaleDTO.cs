@@ -5,7 +5,7 @@ namespace Proyecto_Control_Logistico.Application.DTOs
 {
     public class SaleDTO
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Número de venta")]
         public string NumberSale { get; set; } = string.Empty;
