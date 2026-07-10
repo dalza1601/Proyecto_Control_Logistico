@@ -1,0 +1,37 @@
+﻿<h2>Prueba de SignalR</h2>
+
+<div id="estado">
+    Desconectado
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+
+    <script>
+
+        const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/inventoryHub")
+        .build();
+
+        connection.on("ReceiveMessage", function (message) {
+        console.log(message);
+        document.getElementById("estado").innerHTML = message;
+        });
+
+        connection.start()
+        .then(function () {
+
+        document.getElementById("estado").innerHTML = "Conectado";
+
+        console.log("Conectado correctamente");
+
+        })
+        .catch(function (err) {
+
+        console.error(err);
+
+        });
+
+    </script>
+}

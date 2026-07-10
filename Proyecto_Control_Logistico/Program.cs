@@ -14,6 +14,7 @@ using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories.Interfaces;
 using Proyecto_Control_Logistico.Infrastructure.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.Repository;
 using Proyecto_Control_Logistico.Infrastructure.Seed;
+using Proyecto_Control_Logistico.Infrastructure.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,10 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile(new MappingHelper());
 });
 
+// Registro de SignalIR biblioteca de código abierto de Microsoft para ASP.NET
+// que facilita la incorporación de funciones en tiempo real en aplicaciones web
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Agregamos el orquestador de Seeders
@@ -97,5 +102,8 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+// Configuración de SignalR para el hub de inventario (Mapeo del hub)
+app.MapHub<InventoryHub>("/inventoryHub");
 
 app.Run();

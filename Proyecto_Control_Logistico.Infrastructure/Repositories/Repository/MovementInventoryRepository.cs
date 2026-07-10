@@ -62,6 +62,8 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
                         Motive = combined.t0.Motive,
                         Date = combined.t0.CreatedAt
                     })
+                .OrderByDescending(x=>x.Date)
+                .Take(20)
                 .ToListAsync();
 
             return movements;
