@@ -102,7 +102,54 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
 
             // Obtener el usuario firmado actual y su dirección
             var usuario = await _userManager.GetUserAsync(User);
-            ViewData["DireccionCliente"] = usuario?.DireccionEntrega ?? "No registrada";
+            if (usuario == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var cliente = await _unitOfWork.ClientRepository.GetFirstOrDefault(
+                client => client.Email == usuario.Email
+            );
+
+            if (cliente == null)
+            {
+                cliente = new Client
+                {
+                    Document = usuario.Id,
+                    FullName = usuario.FullName,
+                    Email = usuario.Email ?? string.Empty,
+                    Address = usuario.DireccionEntrega ?? string.Empty,
+                    Active = true,
+                    CreatedAt = DateTime.Now
+                };
+
+                await _unitOfWork.ClientRepository.AddAsync(cliente);
+                await _unitOfWork.SaveAsync();
+            }
+
+            var venta = new Sale
+            {
+                NumberSale = $"V-{DateTime.Now:yyyyMMddHHmmss}",
+                ClientId = cliente.Id,
+                DateSale = DateTime.Now,
+                TotalAmount = carrito.Sum(item => item.SubTotal),
+                Status = "Pendiente de envio",
+                CreatedAt = DateTime.Now,
+                SaleDetails = carrito.Select(item => new SaleDetail
+                {
+                    ProductId = item.ProductoId,
+                    Quantity = item.Cantidad,
+                    UnitPrice = item.Precio,
+                    TotalPrice = item.SubTotal,
+                    CreatedAt = DateTime.Now
+                }).ToList()
+            };
+
+            await _unitOfWork.SaleRepository.AddAsync(venta);
+            await _unitOfWork.SaveAsync();
+
+            ViewData["DireccionCliente"] = usuario.DireccionEntrega ?? "No registrada";
+            ViewData["NumeroVenta"] = venta.NumberSale;
 
             HttpContext.Session.Remove("MiCarrito");
             return View(carrito);
