@@ -133,7 +133,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 ClientId = cliente.Id,
                 DateSale = DateTime.Now,
                 TotalAmount = carrito.Sum(item => item.SubTotal),
-                Status = "Pendiente de envio",
+                Status = "Registrado",
                 CreatedAt = DateTime.Now,
                 SaleDetails = carrito.Select(item => new SaleDetail
                 {

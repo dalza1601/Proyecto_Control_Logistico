@@ -93,8 +93,46 @@
             Volver
         </a>
 
+        @if (Model.Status == "Registrado")
+        {
+            <form asp-area="Admin"
+                  asp-controller="Sale"
+                  asp-action="MarkAsReviewed"
+                  asp-route-id="@Model.Id"
+                  method="post"
+                  class="d-inline">
+                <button type="submit" class="btn btn-primary">
+                    Marcar como revisado
+                </button>
+            </form>
+        }
+        @if (Model.Status == "Revisado")
+        {
+            <form asp-area="Admin"
+                  asp-controller="Sale"
+                  asp-action="MarkAsPendingShipment"
+                  asp-route-id="@Model.Id"
+                  method="post"
+                  class="d-inline">
+                <button type="submit" class="btn btn-warning">
+                    Marcar pendiente de envío
+                </button>
+            </form>
+        }
+
         @if (Model.Status == "Pendiente de envio" || Model.Status == "Pendiente de envío")
         {
+            <form asp-area="Admin"
+                  asp-controller="Sale"
+                  asp-action="MarkAsDelivered"
+                  asp-route-id="@Model.Id"
+                  method="post"
+                  class="d-inline">
+                <button type="submit" class="btn btn-success">
+                    Marcar entregado
+                </button>
+            </form>
+
             <form asp-area="Admin"
                   asp-controller="Sale"
                   asp-action="Cancel"
