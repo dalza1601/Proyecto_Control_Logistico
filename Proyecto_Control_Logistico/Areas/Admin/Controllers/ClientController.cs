@@ -35,6 +35,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var client = _mapper.Map<Client>(clientDTO);
+                client.UpdatedAt = DateTime.Now;
                 await _unitOfWork.ClientRepository.AddAsync(client);
                 await _unitOfWork.SaveAsync();
                 AlertTitleTextAndIcon("Cliente registrado", "El cliente ha sido registrado exitosamente.", TypeIconsNotification.success);
@@ -111,6 +112,18 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
             await _unitOfWork.SaveAsync();
             AlertTitleTextAndIcon("Cliente deshabilitado", "El cliente ha sido deshabilitado exitosamente.", TypeIconsNotification.success);
             return Json(new { success = true, message = "Cliente deshabilitado exitosamente." });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            var client = await _unitOfWork.ClientRepository.GetByDniAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            var clientDTO = _mapper.Map<ClientDTO>(client);
+            return PartialView("_Details", clientDTO);
         }
     }
 }

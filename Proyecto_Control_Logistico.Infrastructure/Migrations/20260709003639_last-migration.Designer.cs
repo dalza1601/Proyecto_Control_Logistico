@@ -12,8 +12,8 @@ using Proyecto_Control_Logistico.Infrastructure.Data;
 namespace Proyecto_Control_Logistico.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260708220642_InventorySeedCreation")]
-    partial class InventorySeedCreation
+    [Migration("20260709003639_last-migration")]
+    partial class lastmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

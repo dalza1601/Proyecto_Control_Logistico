@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Proyecto_Control_Logistico.Domain.Entities.CarritoItem>
+
+@{
+    ViewData["Title"] = "Mi Carrito de Compras";
+    // Calculamos el total sumando el subtotal de cada ítem en la lista
+    decimal totalGeneral = Model?.Sum(i => i.SubTotal) ?? 0;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Resumen de tu Compra</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center shadow-sm">
+            <h4>Tu carrito está vacío</h4>
+            <p>Aún no has agregado ningún producto. ¡Vuelve a la tienda para descubrir nuestro catálogo!</p>
+            <a asp-action="Index" class="btn btn-primary mt-3">Ir a la Tienda</a>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="ps-4">Producto</th>
+                                <th class="text-center">Precio Unitario</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-end pe-4">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="align-middle ps-4 fw-bold">@item.Nombre</td>
+                                    <td class="align-middle text-center">S/ @item.Precio.ToString("0.00")</td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge bg-secondary fs-6">@item.Cantidad</span>
+                                    </td>
+                                    <td class="align-middle text-end pe-4 fw-bold text-primary">
+                                        S/ @item.SubTotal.ToString("0.00")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold fs-5 align-middle">TOTAL GENERAL:</td>
+                                <td class="text-end pe-4 fw-bold fs-4 text-danger">S/ @totalGeneral.ToString("0.00")</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-5">
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                Volver a la Tienda
+            </a>
+
+            <a asp-action="SimularCompra" class="btn btn-success btn-lg shadow-sm">
+                Simular Compra
+            </a>
+        </div>
+    }
+</div>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Proyecto_Control_Logistico.Domain.Entities.Product>
+
+@{
+    ViewData["Title"] = "Tienda en Línea";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Catálogo de Productos</h2>
+
+        <a asp-action="VerCarrito" class="btn btn-outline-primary shadow-sm position-relative">
+            <i class="bi bi-cart3"></i> Ver mi Carrito
+        </a>
+    </div>
+
+    <form asp-action="Index" method="get" class="mb-5">
+        <div class="input-group input-group-lg shadow-sm">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" name="buscar" value="@ViewData["FiltroActual"]"
+                   class="form-control border-start-0"
+                   placeholder="Busca por nombre del producto, código o descripción..." />
+
+            <button class="btn btn-primary px-4" type="submit">Buscar</button>
+
+            @if (ViewData["FiltroActual"] != null)
+            {
+                <a asp-action="Index" class="btn btn-outline-secondary px-4">Limpiar</a>
+            }
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center shadow-sm py-4">
+            <i class="bi bi-exclamation-circle fs-1 d-block mb-2"></i>
+            <h4>¡Vaya! No encontramos lo que buscas</h4>
+            <p>No hay productos que coincidan con "<strong>@ViewData["FiltroActual"]</strong>". Intenta con otra palabra o revisa tu ortografía.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 position-relative">
+
+                        @if (item.Stock < 5)
+                        {
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">¡Poco stock!</span>
+                        }
+
+                        <img src="https://via.placeholder.com/250" class="card-img-top" alt="@item.Name">
+
+                        <div class="card-body d-flex flex-column">
+                            <p class="text-muted small mb-1">Cód: @item.Code | @item.UnitMeasure</p>
+                            <h5 class="card-title text-truncate" title="@item.Name">@item.Name</h5>
+                            <p class="card-text text-muted small text-truncate" title="@item.Description">@item.Description</p>
+
+                            <h4 class="card-text text-primary mb-3 mt-auto fw-bold">S/ @item.PriceSell.ToString("0.00")</h4>
+
+                            <div class="mt-2">
+                                <form asp-action="AgregarAlCarrito" method="post">
+                                    <input type="hidden" name="productoId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-danger w-100" @(item.Stock == 0 ? "disabled" : "")>
+                                        <i class="bi bi-cart-plus"></i> @(item.Stock == 0 ? "Agotado" : "Agregar")
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>

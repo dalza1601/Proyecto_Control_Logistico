@@ -19,7 +19,7 @@ using Proyecto_Control_Logistico.Infrastructure.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("SQLSERVER_CONECTION") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("SQLSERVER_AZURE_Connection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
@@ -64,6 +64,14 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile(new MappingHelper());
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;  
+});
+
 // Registro de SignalIR biblioteca de código abierto de Microsoft para ASP.NET
 // que facilita la incorporación de funciones en tiempo real en aplicaciones web
 builder.Services.AddSignalR();
@@ -87,7 +95,7 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
