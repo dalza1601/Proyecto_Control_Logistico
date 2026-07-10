@@ -4,18 +4,29 @@ using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Application.DTOs;
 using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.Domain.Constant;
-using Proyecto_Control_Logistico.Domain.Enums;
 using Proyecto_Control_Logistico.Domain.Entities;
+using Proyecto_Control_Logistico.Domain.Enums;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Interfaces;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Services;
 using Proyecto_Control_Logistico.UI.MVC.Utils;
 
 namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
+    
 {
+
     [Area(AreaConstants.ADMIN)]
+
     public class SaleController : BaseController
     {
-        public SaleController(IUnitOfWork unitOfWork, ILogger<BaseController> logger, IMapper mapper)
+        private readonly IPdfService _pdfService;
+        public SaleController(
+            IUnitOfWork unitOfWork,
+            ILogger<BaseController> logger,
+            IMapper mapper,
+            IPdfService pdfService)
             : base(unitOfWork, logger, mapper)
         {
+            _pdfService = pdfService;
         }
 
         public async Task<IActionResult> Index()
@@ -46,6 +57,34 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
             var saleDTO = _mapper.Map<SaleDTO>(sale);
 
             return View(saleDTO);
+        }
+        public async Task<IActionResult> DownloadReceipt(int id)
+        {
+            var sale = await _unitOfWork.SaleRepository.GetFirstOrDefault(
+                sale => sale.Id == id,
+                includeProperties: "Client,SaleDetails.Product"
+            );
+
+            if (sale == null)
+            {
+                return NotFound();
+            }
+
+            if (sale.Status != "Entregado")
+            {
+                AlertTitleTextAndIcon(
+                    "Comprobante no disponible",
+                    "El comprobante solo puede generarse cuando la venta está entregada.",
+                    TypeIconsNotification.warning
+                );
+
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            var fileBytes = _pdfService.GenerateSaleReceipt(sale);
+            var fileName = $"Boleta-{sale.NumberSale}.pdf";
+
+            return File(fileBytes, "application/pdf", fileName);
         }
 
         [HttpPost]
@@ -87,7 +126,9 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        
 
+        
         [HttpPost]
         public async Task<IActionResult> MarkAsReviewed(int id)
         {

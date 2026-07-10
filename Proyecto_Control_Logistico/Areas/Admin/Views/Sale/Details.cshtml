@@ -119,7 +119,17 @@
                 </button>
             </form>
         }
-
+        @if (Model.Status == "Entregado")
+        {
+            <a asp-area="Admin"
+               asp-controller="Sale"
+               asp-action="DownloadReceipt"
+               asp-route-id="@Model.Id"
+               class="btn btn-info">
+                Descargar comprobante PDF
+            </a>
+        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
         @if (Model.Status == "Pendiente de envio" || Model.Status == "Pendiente de envío")
         {
             <form asp-area="Admin"
