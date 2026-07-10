@@ -7,5 +7,6 @@ namespace Proyecto_Control_Logistico.Domain.Entities
     {
         [Required(ErrorMessage = "El nombre es obligatorio")]
         public string FullName { get; set; }
+        public string? DireccionEntrega { get; set; }
     }
 }

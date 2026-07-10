@@ -1,0 +1,191 @@
+﻿/* =================================================================================
+        1) PALETA REMAPEADA A LAS VARIABLES DE BOOTSTRAP
+        Al pisar --bs-success / --bs-danger / --bs-warning / --bs-body-bg, etc, TODOS los
+        componentes de Bootstrap (badges, botones, bordes, form-select) heredan el tema sin
+        escribir CSS por componente.
+        ================================================================================= */
+[data-bs-theme=dark] {
+    --bs-body-bg: #10151A;
+    --bs-body-color: #E9EEF0;
+    --bs-secondary-color: #8CA0AA;
+    --bs-border-color: rgba(232,237,239,0.08);
+    --bs-border-color-translucent: rgba(232,237,239,0.08);
+    --bs-tertiary-bg: #1E2730;
+    --bs-success: #4FD1AE;
+    --bs-success-rgb: 79,209,174;
+    --bs-danger: #F2665E;
+    --bs-danger-rgb: 242,102,94;
+    --bs-warning: #F2B84B;
+    --bs-warning-rgb: 242,184,75;
+    --bs-secondary: #5C6E77;
+    --bs-secondary-rgb: 92,110,119;
+    --bs-card-bg: #171E24;
+    --bs-card-border-color: var(--bs-border-color);
+    --bs-tooltip-bg: #171E24;
+}
+
+/* =================================================================================
+        2) TIPOGRAFIA Y FONDO (Bootstrap no define fuentes de marca ni gradientes)
+        ================================================================================= */
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: radial-gradient(1100px 500px at 85% -10%, rgba(79,209,174,0.08), transparent 60%), radial-gradient(900px 500px at 0% 0%, rgba(242,184,75,0.06), transparent 55%), var(--bs-body-bg);
+    min-height: 100vh;
+}
+
+.mono {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.display-title, h2.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.display-title {
+    font-weight: 700;
+    font-size: clamp(22px,3vw,30px);
+}
+
+.hero-value {
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: clamp(34px,5vw,52px);
+    font-weight: 700;
+    color: var(--bs-warning);
+    line-height: 1;
+}
+
+/* =================================================================================
+        3) HERO con gradiente + blob decorativo (Bootstrap no trae gradientes de marca)
+        ================================================================================= */
+.hero-card {
+    background: linear-gradient(135deg, var(--bs-card-bg) 0%, var(--bs-tertiary-bg) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-card::after {
+    content: "";
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(242,184,75,0.16), transparent 70%);
+}
+
+/* =================================================================================
+        4) BADGES "TENUES" — Bootstrap solo trae badges de relleno solido (text-bg-*),
+        estas variantes con fondo translucido son una extension propia del tema.
+        ================================================================================= */
+.badge-in {
+    background: rgba(var(--bs-success-rgb), .14);
+    color: var(--bs-success);
+}
+
+.badge-out {
+    background: rgba(var(--bs-danger-rgb), .14);
+    color: var(--bs-danger);
+}
+
+.badge-warn {
+    background: rgba(var(--bs-warning-rgb), .14);
+    color: var(--bs-warning);
+}
+
+.badge-muted {
+    background: rgba(var(--bs-secondary-rgb), .18);
+    color: var(--bs-secondary-color);
+}
+
+/* Boton principal con texto oscuro sobre acento claro (no es el contraste por defecto de btn-success) */
+.btn-accent {
+    background: var(--bs-success);
+    border-color: var(--bs-success);
+    color: #0A2620;
+    font-weight: 600;
+}
+
+    .btn-accent:hover {
+        background: #3fc19d;
+        border-color: #3fc19d;
+        color: #0A2620;
+    }
+
+/* =================================================================================
+        5) "BALANCE BEAM" por almacen — barra divergente, no existe en Bootstrap
+        ================================================================================= */
+.beam-row {
+    margin-bottom: 16px;
+}
+
+    .beam-row:last-child {
+        margin-bottom: 0;
+    }
+
+.beam-track {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    background: var(--bs-tertiary-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .beam-track::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--bs-border-color);
+        z-index: 2;
+    }
+
+.beam-half {
+    width: 50%;
+    display: flex;
+    height: 100%;
+}
+
+.beam-out {
+    background: var(--bs-danger);
+    margin-left: auto;
+    opacity: .85;
+    border-radius: 6px 0 0 6px;
+    height: 100%;
+}
+
+.beam-in {
+    background: var(--bs-success);
+    opacity: .9;
+    border-radius: 0 6px 6px 0;
+    height: 100%;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-in {
+    background: var(--bs-success);
+}
+
+.dot-out {
+    background: var(--bs-danger);
+}
+
+.chart-wrap {
+    height: 260px;
+}
+
+.beam-wrap {
+    height: 260px;
+    overflow-y: auto;
+    padding-right: 4px;
+}

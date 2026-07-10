@@ -106,6 +106,10 @@ public class RegisterModel : PageModel
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string? ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "La dirección de entrega es obligatoria.")]
+        [Display(Name = "Dirección de Entrega")]
+        public string DireccionEntrega { get; set; } = string.Empty;
     }
 
 
@@ -117,6 +121,8 @@ public class RegisterModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
     {
+
+
         returnUrl ??= Url.Content("~/");
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (ModelState.IsValid)
@@ -124,7 +130,7 @@ public class RegisterModel : PageModel
             var user = CreateUser();
 
             user.FullName = Input.FullName;
-
+            user.DireccionEntrega = Input.DireccionEntrega;
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
             var result = await _userManager.CreateAsync(user, Input.Password);
