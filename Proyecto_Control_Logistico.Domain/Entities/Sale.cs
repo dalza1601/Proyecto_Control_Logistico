@@ -12,6 +12,9 @@ namespace Proyecto_Control_Logistico.Domain.Entities
         public DateTime DateSale { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string Status { get; set; } = "Registrado";
         public Client? Client { get; set; }
         public ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
     }
