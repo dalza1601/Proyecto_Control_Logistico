@@ -1,0 +1,242 @@
+﻿@model Proyecto_Control_Logistico.UI.MVC.ViewModel.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard Ejecutivo";
+}
+
+<div class="container-fluid mt-4 mb-5">
+
+    <!-- ENCABEZADO -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"><i class="bi bi-speedometer2"></i> Dashboard Ejecutivo</h1>
+        <!-- Botón de exportar (pendiente de conectar al IExcelService) -->
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="bi bi-file-earmark-excel"></i> Exportar Reportes a Excel
+        </a>
+    </div>
+
+    <!-- FILA 1: ALERTAS Y TABLAS -->
+    <div class="row">
+
+        <!-- COLUMNA IZQUIERDA: Semáforo de Alertas -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4 border-left-warning">
+                <div class="card-header py-3 bg-warning text-white">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Alertas de Stock (< 20 und.)
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    @if (!Model.ProductosBajoStock.Any())
+                    {
+                        <div class="p-4 text-center text-success fw-bold">
+                            ¡Todos los productos tienen un stock saludable!
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                            <table class="table table-hover table-striped text-center mb-0">
+                                <thead class="table-light sticky-top">
+                                    <tr>
+                                        <th>Cód.</th>
+                                        <th>Producto</th>
+                                        <th>Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ProductosBajoStock)
+                                    {
+                                        // Semáforo: Rojo si es 0, Naranja si es < 10, Amarillo si es < 20
+                                        var badgeColor = item.Stock == 0 ? "bg-danger" : (item.Stock < 10 ? "bg-warning text-dark" : "bg-info text-dark");
+
+                                        <tr>
+                                            <td class="align-middle fw-bold text-muted">@item.Code</td>
+                                            <td class="align-middle text-start text-truncate" style="max-width: 150px;" title="@item.Name">@item.Name</td>
+                                            <td class="align-middle">
+                                                <span class="badge @badgeColor fs-6">@item.Stock</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: Top 10 y Productos Sin Vender -->
+        <div class="col-xl-8 col-lg-7">
+
+            <!-- TOP 10 PRODUCTOS -->
+            <div class="card shadow mb-4 border-left-success">
+                <div class="card-header py-3 bg-success text-white">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="bi bi-trophy-fill"></i> Top 10 Productos Más Vendidos (Simulado)
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover text-center mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cód.</th>
+                                    <th>Producto</th>
+                                    <th>Precio de Venta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int rank = 1;
+                                }
+                                @foreach (var item in Model.Top10Productos)
+                                {
+                                    <tr>
+                                        <td class="align-middle fw-bold text-success">@rank</td>
+                                        <td class="align-middle text-muted">@item.Code</td>
+                                        <td class="align-middle text-start">@item.Name</td>
+                                        <td class="align-middle text-success fw-bold">S/ @item.PriceSell.ToString("0.00")</td>
+                                    </tr>
+                                    rank++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCTOS SIN VENDER -->
+            <div class="card shadow mb-4 border-left-secondary">
+                <div class="card-header py-3 bg-secondary text-white">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="bi bi-box-seam"></i> Productos Estancados (Simulado)
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+                        <table class="table table-hover table-sm text-center mb-0">
+                            <thead class="table-light sticky-top">
+                                <tr>
+                                    <th>Cód.</th>
+                                    <th>Producto</th>
+                                    <th>Stock Actual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ProductosSinVender)
+                                {
+                                    <tr>
+                                        <td class="align-middle text-muted">@item.Code</td>
+                                        <td class="align-middle text-start">@item.Name</td>
+                                        <td class="align-middle"><span class="badge bg-secondary">@item.Stock und.</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FILA 2: GRÁFICOS -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4 border-left-primary">
+                <div class="card-header py-3 bg-primary text-white">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="bi bi-bar-chart-fill"></i> Compras Mensuales a Proveedores (S/)
+                    </h6>
+                </div>
+                <div class="card-body">
+                    @if (!Model.MesesCompras.Any())
+                    {
+                        <div class="alert alert-info text-center">No hay registros de compras para mostrar en el gráfico.</div>
+                    }
+                    else
+                    {
+                        <!-- Contenedor del Canvas para Chart.js -->
+                        <div style="position: relative; height:40vh; width:100%">
+                            <canvas id="comprasChart"></canvas>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- SCRIPT DE CHART.JS -->
+@section Scripts {
+    <!-- CDN Oficial de Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        // 1. Convertimos las listas de C# a arrays de JavaScript
+        const meses = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MesesCompras));
+        const totales = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.TotalesCompras));
+
+        // Solo renderizamos si hay datos
+        if (meses.length > 0) {
+        const ctx = document.getElementById('comprasChart').getContext('2d');
+
+        const comprasChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: meses,
+        datasets: [{
+        label: 'Total Comprado (S/)',
+        data: totales,
+        backgroundColor: 'rgba(78, 115, 223, 0.7)', // Azul corporativo (Bootstrap Primary)
+        borderColor: 'rgba(78, 115, 223, 1)',
+        borderWidth: 1,
+        borderRadius: 4, // Bordes redondeados en las barras
+        hoverBackgroundColor: 'rgba(78, 115, 223, 0.9)'
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false, // Permite que el gráfico se adapte a la altura del div contenedor
+        plugins: {
+        legend: {
+        display: true,
+        position: 'top'
+        },
+        tooltip: {
+        callbacks: {
+        label: function(context) {
+        let label = context.dataset.label || '';
+        if (label) {
+        label += ': ';
+        }
+        if (context.parsed.y !== null) {
+        label += new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(context.parsed.y);
+        }
+        return label;
+        }
+        }
+        }
+        },
+        scales: {
+        y: {
+        beginAtZero: true,
+        ticks: {
+        callback: function(value) {
+        // Formatear como moneda en el eje Y
+        return 'S/ ' + value;
+        }
+        }
+        }
+        }
+        }
+        });
+        }
+        });
+    </script>
+}
