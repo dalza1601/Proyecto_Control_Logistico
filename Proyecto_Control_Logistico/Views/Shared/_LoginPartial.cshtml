@@ -1,18 +1,33 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using Proyecto_Control_Logistico.Domain.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle  pl-0 pr-0" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="dropdown" id="profileDropdown" title="Manage">
+                <i class="typcn typcn-user-outline mr-0"></i>
+                <span class="nav-profile-name">Hello @User.Identity?.Name!</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                @* <a class="dropdown-item">
+                    <i class="typcn typcn-cog text-primary"></i>
+                    Settings
+                </a> *@
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <i class="typcn typcn-power text-primary"></i>
+                    Logout
+                </a>
+            </div>
     </li>
-    <li class="nav-item">
+@*     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
-    </li>
+    </li> *@
+
 }
 else
 {

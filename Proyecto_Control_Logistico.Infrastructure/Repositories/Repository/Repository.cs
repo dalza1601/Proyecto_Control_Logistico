@@ -1,0 +1,76 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Proyecto_Control_Logistico.Infrastructure.Data;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
+using System.Linq.Expressions;
+
+namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
+{
+    public class Repository<T> : IRepository<T> where T : class
+    {
+        protected readonly ApplicationDbContext cntx;
+        internal DbSet<T> dbSet;
+
+        public Repository(ApplicationDbContext context)
+        {
+            cntx = context;
+            dbSet = cntx.Set<T>();
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await dbSet.AddAsync(entity);
+        }
+
+        public async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            await dbSet.AddRangeAsync(entities);
+        }
+
+        public Task<IQueryable<T>> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string? includeProperties = null)
+        {
+            var baseQuery = filter != null ? dbSet.Where(filter) : dbSet.AsQueryable();
+
+            var queryWithIncludes = includeProperties != null
+                ? includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(p => p.Trim())
+                .Aggregate(baseQuery, (current, include) => current.Include(include))
+                : baseQuery;
+
+            return orderBy != null ? Task.FromResult(orderBy(queryWithIncludes).AsNoTracking()) : Task.FromResult(queryWithIncludes.AsNoTracking());
+        }
+
+        public async Task<T?> GetByIdAsync(int id)
+        {
+            return await dbSet.FindAsync(id);
+        }
+
+        public async Task<T?> GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string? includeProperties = null)
+        {
+            var baseQuery = filter != null ? dbSet.Where(filter) : dbSet.AsQueryable();
+
+            var queryWithIncludes = includeProperties != null
+                ? includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(p => p.Trim())
+                .Aggregate(baseQuery, (current, include) => current.Include(include))
+                : baseQuery;
+
+            return await queryWithIncludes.FirstOrDefaultAsync();
+        }
+
+        public async Task Remove(T entity)
+        {
+            dbSet.Remove(entity);
+        }
+
+        public async Task RemoveRange(IEnumerable<T> entities)
+        {
+            dbSet.RemoveRange(entities);
+
+        }
+
+        public async Task Update(T entity)
+        {
+            dbSet.Update(entity);
+        }
+    }
+}

@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Cliente";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-center text-dark">
+                Cliente
+            </h1>
+            <br />
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clientModal" onclick="openModalClient()">
+                Nuevo cliente
+            </button>
+        </div>
+    </div>
+    <br />
+    <br />
+    <table id="tblClients" class="table table-striped table-bordered" style="width: 100%">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>DNI</th>
+                <th>Nombre completo</th>
+                <th>Teléfono</th>
+                <th>E-mail</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="modal fade" id="clientModal" tabindex="1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="clientModalContent"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/data-table/dataTables.js"></script>
+    <script type="text/javascript" src="/lib/toastr/toastr.min.js"></script>
+    <script src="~/js/modules/client.js"></script>
+}
+
+@section CSS {
+    <link rel="stylesheet" href="/lib/data-table/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="/lib/toastr/toastr.min.css" />
+}
