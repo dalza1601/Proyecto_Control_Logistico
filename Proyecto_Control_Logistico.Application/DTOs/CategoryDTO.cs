@@ -4,7 +4,6 @@ namespace Proyecto_Control_Logistico.Application.DTOs
 {
     public class CategoryDTO
     {
-
         public int Id { get; set; }
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "El nombre es requerido")]

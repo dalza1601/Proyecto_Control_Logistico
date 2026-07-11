@@ -8,5 +8,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
         Task<IEnumerable<Product>> GetProductActivesAsync();
         Task<IEnumerable<Product>> GetProductByCategoryAsync(int categoryId);
         Task<bool> ProductExistAsync(string code);
+
+        Task<IQueryable<Product>> GetAllWithCategory();
     }
 }

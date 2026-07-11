@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Proyecto_Control_Logistico.Application.DTOs;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Infrastructure.Data;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
@@ -9,6 +10,15 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
     public class ProductRepository : Repository<Product>, IProductRepository
     {
         private readonly ApplicationDbContext _context;
+
+        public Task<IQueryable<Product>> GetAllWithCategory()
+        {
+            return Task.FromResult(
+                _context.Products
+                    .Include(x => x.Category)
+                    .AsNoTracking()
+            );
+        }
 
         public ProductRepository(ApplicationDbContext context) : base(context)
         {

@@ -12,8 +12,8 @@ using Proyecto_Control_Logistico.Infrastructure.Data;
 namespace Proyecto_Control_Logistico.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260704014529_db-actualizada")]
-    partial class dbactualizada
+    [Migration("20260707020821_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

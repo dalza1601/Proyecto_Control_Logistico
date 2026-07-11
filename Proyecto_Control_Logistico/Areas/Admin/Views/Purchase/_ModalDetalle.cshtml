@@ -1,0 +1,76 @@
+﻿<div class="modal fade" id="modalDetalle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Agregar Producto</h5>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label>Artículo</label>
+
+                    <select id="cmbArticulo" class="form-select">
+                        <option value="">Seleccione</option>
+
+                        @if (ViewBag.Articulos != null)
+                        {
+                            foreach (var item in ViewBag.Articulos)
+                            {
+                                <option value="@item.Id"
+                                        data-precio="@item.PriceCost">
+                                    @item.Name
+                                </option>
+                            }
+                        }
+                    </select>
+
+
+                </div>
+
+                <div class="mb-3">
+                    <label>Cantidad</label>
+
+                    <input type="number"
+                           id="txtCantidad"
+                           value="1"
+                           class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Precio Costo</label>
+
+                    <input type="number"
+                           id="txtCosto"
+                           class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Total</label>
+
+                    <input type="number"
+                           id="txtTotal"
+                           class="form-control"
+                           readonly>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-success"
+                        id="btnAgregar">
+                    Agregar
+                </button>
+
+                <button class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

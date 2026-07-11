@@ -10,6 +10,12 @@ namespace Proyecto_Control_Logistico.Application.Mapping
         
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Client,ClientDTO>().ReverseMap();
+            CreateMap<Supplier, SupplierDTO>().ReverseMap();
+            //CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>()
+               .ForMember(dest => dest.CategoryName,
+               opt => opt.MapFrom(src => src.Category.Name))
+               .ReverseMap();
         }
     }
 }

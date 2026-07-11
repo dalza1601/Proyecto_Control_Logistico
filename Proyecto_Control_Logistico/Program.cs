@@ -35,9 +35,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 
+//builder.Services.AddControllersWithViews();
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 builder.Services.AddControllersWithViews();
-
-
 builder.Services.AddRazorPages();
 
 //Configuracion MongoDB
@@ -46,6 +51,7 @@ builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("Mong
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+//builder.Services.AddScoped<IProductImportService, ProductImportService>();
 
 //Agregamos el orquestador que es UnitOfWork EF
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -74,7 +80,8 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}")
+    pattern: "{area=Admin}/{controller=Category}/{action=Index}/{id?}")
+    //pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 // url -> /Producto/Detalle/1
 // url -> /Admin/Producto/Detalle/1

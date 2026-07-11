@@ -1,0 +1,75 @@
+﻿@using Proyecto_Control_Logistico.Application.DTOs
+@model SupplierDTO
+@{
+    ViewData["ButtonTitle"] = "Crear Proveedor";
+}
+
+<br />
+
+<h3 class="text-center">Crear una Nuevo Proveedor</h3>
+<br />
+
+<form id="frmSupplier" asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="m-4">
+
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="RUC"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="RUC" class="form-control" placeholder="Ingrese RUC" />
+                <span asp-validation-for="RUC" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="Name" class="form-control" placeholder="Ingrese nombre Proveedor" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Address"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="Address" class="form-control" placeholder="Ingrese una direccion" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Phone"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="Phone" class="form-control" placeholder="Ingrese un telefono" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group row mb-1">
+            <div class="col-3 col-form-label">
+                <label asp-for="Email"></label>
+            </div>
+            <div class="col-9 p-1">
+                <input required asp-for="Email" class="form-control" placeholder="Ingrese un correo" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <div class="modal-footer justify-content-center">
+        <partial name="_VistaCrearVolver" />
+    </div>
+</form>

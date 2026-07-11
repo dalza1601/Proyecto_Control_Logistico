@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Proyecto_Control_Logistico.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class First : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -439,19 +439,19 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                 columns: new[] { "Id", "Active", "CreatedAt", "Description", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bicycles and related equipment", "Bikes", null },
-                    { 2, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bike components and parts", "Components", null },
-                    { 3, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Apparel and accessories", "Clothing", null },
-                    { 4, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bike accessories and gear", "Accessories", null },
-                    { 5, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Educational and reference materials", "Books", null },
-                    { 6, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Any substance that can be consumed", "Foods", null },
-                    { 7, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Beverages and liquids", "Drinks", null },
-                    { 8, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Decorative items and accessories", "Jewelry", null },
-                    { 9, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Electronic devices and gadgets", "Technology", null },
-                    { 10, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Medical drugs and treatments", "Medicaments", null },
-                    { 11, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Personal care and beauty products", "Cosmetics", null },
-                    { 12, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Plants and gardening supplies", "Garden", null },
-                    { 13, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Furniture and home decor", "Furniture", null }
+                    { 1, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bicicletas y accesorios", "Bicicletas", null },
+                    { 2, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Componentes de bicicletas", "Componentes", null },
+                    { 3, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ropa y accesorios", "Ropa", null },
+                    { 4, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Accesorios para bicicletas", "Accesorios", null },
+                    { 5, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Materiales educativos y de referencia", "Libros", null },
+                    { 6, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cualquier sustancia que pueda ser consumida", "Comidas", null },
+                    { 7, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bebidas y líquidos", "Bebidas", null },
+                    { 8, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Accesorios de joyería", "Joyas", null },
+                    { 9, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dispositivos electrónicos y accesorios", "Tecnología", null },
+                    { 10, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Medicamentos y tratamientos médicos", "Medicamentos", null },
+                    { 11, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Productos de cuidado personal y belleza", "Cosméticos", null },
+                    { 12, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Plantas y suministros de jardinería", "Jardinería", null },
+                    { 13, true, new DateTime(2026, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Muebles y decoración para el hogar", "Muebles", null }
                 });
 
             migrationBuilder.InsertData(
