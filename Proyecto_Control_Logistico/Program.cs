@@ -6,6 +6,8 @@ using Proyecto_Control_Logistico.Application.UseCase;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Services;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Interfaces;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Services;
 using Proyecto_Control_Logistico.Infrastructure.Data;
 using Proyecto_Control_Logistico.Infrastructure.Mongo;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Mappings;
@@ -49,6 +51,7 @@ builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("Mong
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 
 // Agregamos los casos de uso de la capa Application
 builder.Services.AddApplicationServices();
