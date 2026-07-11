@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Proyecto_Control_Logistico.Application.DTOs.SaleDTO>
+@using Proyecto_Control_Logistico.Domain
 
 @{
     ViewData["Title"] = "Ventas";
@@ -42,11 +43,11 @@
                     <td>@sale.DateSale.ToString("dd/MM/yyyy HH:mm")</td>
                     <td>S/ @sale.TotalAmount.ToString("0.00")</td>
                     <td>
-                        @if (sale.Status == "Anulado")
+                        @if (sale.Status == Constants.SALE_STATUS_CANCELLED)
                         {
                             <span class="badge bg-danger">@sale.Status</span>
                         }
-                        else if (sale.Status == "Entregado")
+                        else if (sale.Status == Constants.SALE_STATUS_DELIVERED)
                         {
                             <span class="badge bg-success">@sale.Status</span>
                         }

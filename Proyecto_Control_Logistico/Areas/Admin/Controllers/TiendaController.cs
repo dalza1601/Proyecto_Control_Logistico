@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Application.Interfaces.IRepository;// se reemplazo ya que la direccion anterior no era la correcta using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 using Proyecto_Control_Logistico.UI.MVC.Helpers;
+using Proyecto_Control_Logistico.Domain;
 
 namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
 {
@@ -133,7 +134,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 ClientId = cliente.Id,
                 DateSale = DateTime.Now,
                 TotalAmount = carrito.Sum(item => item.SubTotal),
-                Status = "Registrado",
+                Status = Constants.SALE_STATUS_REGISTERED,
                 CreatedAt = DateTime.Now,
                 SaleDetails = carrito.Select(item => new SaleDetail
                 {

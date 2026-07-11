@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Proyecto_Control_Logistico.Domain;
 
 namespace Proyecto_Control_Logistico.Application.DTOs
 
@@ -23,7 +24,7 @@ namespace Proyecto_Control_Logistico.Application.DTOs
         public decimal TotalAmount { get; set; }
 
         [Display(Name = "Estado")]
-        public string Status { get; set; } = "Registrado";
+        public string Status { get; set; } = Constants.SALE_STATUS_REGISTERED;
 
         public List<SaleDetailDTO> Details { get; set; } = new();
 

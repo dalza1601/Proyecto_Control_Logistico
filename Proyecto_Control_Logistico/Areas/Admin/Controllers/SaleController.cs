@@ -6,6 +6,7 @@ using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.Domain.Constant;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Domain.Enums;
+using Proyecto_Control_Logistico.Domain;
 using Proyecto_Control_Logistico.FL.UTIL.Pdf.Interfaces;
 using Proyecto_Control_Logistico.FL.UTIL.Pdf.Services;
 using Proyecto_Control_Logistico.UI.MVC.Utils;
@@ -70,7 +71,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (sale.Status != "Entregado")
+            if (sale.Status != Constants.SALE_STATUS_DELIVERED)
             {
                 AlertTitleTextAndIcon(
                     "Comprobante no disponible",
@@ -100,7 +101,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (sale.Status != "Pendiente de envio" && sale.Status != "Pendiente de envío")
+            if (sale.Status != Constants.SALE_STATUS_PENDING_SHIPMENT)
             {
                 AlertTitleTextAndIcon(
                     "Venta no anulada",
@@ -111,7 +112,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Details), new { id });
             }
 
-            sale.Status = "Anulado";
+            sale.Status = Constants.SALE_STATUS_CANCELLED;
             sale.UpdatedAt = DateTime.Now;
 
             await RestoreInventoryAsync(sale);
@@ -142,7 +143,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (sale.Status != "Registrado")
+            if (sale.Status != Constants.SALE_STATUS_REGISTERED)
             {
                 AlertTitleTextAndIcon(
                     "Estado no actualizado",
@@ -166,7 +167,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Details), new { id });
             }
 
-            sale.Status = "Revisado";
+            sale.Status = Constants.SALE_STATUS_REVIEWED;
             sale.UpdatedAt = DateTime.Now;
 
             await DiscountInventoryAsync(sale);
@@ -192,7 +193,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (sale.Status != "Revisado")
+            if (sale.Status != Constants.SALE_STATUS_REVIEWED)
             {
                 AlertTitleTextAndIcon(
                     "Estado no actualizado",
@@ -203,7 +204,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Details), new { id });
             }
 
-            sale.Status = "Pendiente de envio";
+            sale.Status = Constants.SALE_STATUS_PENDING_SHIPMENT;
             sale.UpdatedAt = DateTime.Now;
 
             await _unitOfWork.SaleRepository.Update(sale);
@@ -228,7 +229,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (sale.Status != "Pendiente de envio" && sale.Status != "Pendiente de envío")
+            if (sale.Status != Constants.SALE_STATUS_PENDING_SHIPMENT)
             {
                 AlertTitleTextAndIcon(
                     "Estado no actualizado",
@@ -239,7 +240,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Details), new { id });
             }
 
-            sale.Status = "Entregado";
+            sale.Status = Constants.SALE_STATUS_DELIVERED;
             sale.UpdatedAt = DateTime.Now;
 
             await _unitOfWork.SaleRepository.Update(sale);

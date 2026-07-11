@@ -1,4 +1,5 @@
 ﻿@model Proyecto_Control_Logistico.Application.DTOs.SaleDTO
+@using Proyecto_Control_Logistico.Domain
 
 @{
     ViewData["Title"] = "Detalle de venta";
@@ -37,11 +38,11 @@
                 <div class="col-md-4">
                     <strong>Estado:</strong>
                     <p>
-                        @if (Model.Status == "Anulado")
+                        @if (Model.Status == Constants.SALE_STATUS_CANCELLED)
                         {
                             <span class="badge bg-danger">@Model.Status</span>
                         }
-                        else if (Model.Status == "Entregado")
+                        else if (Model.Status == Constants.SALE_STATUS_DELIVERED)
                         {
                             <span class="badge bg-success">@Model.Status</span>
                         }
@@ -93,7 +94,7 @@
             Volver
         </a>
 
-        @if (Model.Status == "Registrado")
+        @if (Model.Status == Constants.SALE_STATUS_REGISTERED)
         {
             <form asp-area="Admin"
                   asp-controller="Sale"
@@ -106,7 +107,7 @@
                 </button>
             </form>
         }
-        @if (Model.Status == "Revisado")
+        @if (Model.Status == Constants.SALE_STATUS_REVIEWED)
         {
             <form asp-area="Admin"
                   asp-controller="Sale"
@@ -119,7 +120,7 @@
                 </button>
             </form>
         }
-        @if (Model.Status == "Entregado")
+        @if (Model.Status == Constants.SALE_STATUS_DELIVERED)
         {
             <a asp-area="Admin"
                asp-controller="Sale"
@@ -130,7 +131,7 @@
             </a>
         }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-        @if (Model.Status == "Pendiente de envio" || Model.Status == "Pendiente de envío")
+        @if (Model.Status == Constants.SALE_STATUS_PENDING_SHIPMENT)
         {
             <form asp-area="Admin"
                   asp-controller="Sale"
