@@ -2,7 +2,7 @@
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
 {
-    public interface IMovementInventory : IRepository<MovementInventory>
+    public interface IMovementInventoryRepository : IRepository<MovementInventory>
     {
         Task<IEnumerable<MovementInventory>> GetMovementInventoryByProductIdAsync(int productId);
         Task<IEnumerable<MovementInventory>> GetMovementInventoryByDateRangeAsync(DateTime startDate, DateTime endDate);

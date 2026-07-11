@@ -5,7 +5,7 @@ using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
 {
-    public class MovementInventoryRepository : Repository<MovementInventory>, IMovementInventory
+    public class MovementInventoryRepository : Repository<MovementInventory>, IMovementInventoryRepository
     {
         private readonly ApplicationDbContext _context;
 

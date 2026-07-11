@@ -12,7 +12,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
         IClientRepository ClientRepository { get; }
         IWareHouseRepository WareHouseRepository { get; }
         IInventoryRepository InventoryRepository { get; }
-        IMovementInventory MovementInventory { get; }
+        IMovementInventoryRepository MovementInventory { get; }
         IOrderRepository OrderRepository { get; }
         IOrderDetailRepository OrderDetailRepository { get; }
         ISaleRepository SaleRepository { get; }
