@@ -19,6 +19,7 @@ namespace Proyecto_Control_Logistico.Application.Mapping
                 .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client != null ? src.Client.FullName : string.Empty))
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.SaleDetails))
                 .ReverseMap();
+            CreateMap<Warehouse, WareHouseDTO>().ReverseMap();
         }
     }
 }
