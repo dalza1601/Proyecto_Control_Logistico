@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 using Proyecto_Control_Logistico.UI.MVC.Utils;
@@ -11,24 +12,12 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class PurchaseController : BaseController
     {
-         
-        //private readonly IPurchaseRepository _purchaseRepository;
-      
-
-        //public PurchaseController(IUnitOfWork unitOfWork, ILogger<BaseController> logger, IMapper mapper) : base(unitOfWork, logger, mapper)
-        //{ }
 
         private readonly IPurchaseRepository _purchaseRepository;
 
-
-        public PurchaseController(
-            IUnitOfWork unitOfWork,
-            ILogger<BaseController> logger,
-            IMapper mapper,
-            IPurchaseRepository purchaseRepository)
-            : base(unitOfWork, logger, mapper)
+        public PurchaseController(IUnitOfWork unitOfWork, ILogger<BaseController> logger, IMapper mapper) : base(unitOfWork, logger, mapper)
         {
-            _purchaseRepository = purchaseRepository;
+            //_purchaseRepository = purchaseRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -58,12 +47,12 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (_purchaseRepository == null)
-            {
-                throw new Exception("_purchaseRepository es null");
-            }
+            //if (_purchaseRepository == null)
+            //{
+            //    throw new Exception("_purchaseRepository es null");
+            //}
 
-            await _purchaseRepository.SaveAsync(model);
+            //await _purchaseRepository.SaveAsync(model);
             await _unitOfWork.SaveAsync();
 
             return Ok(new

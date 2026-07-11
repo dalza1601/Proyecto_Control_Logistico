@@ -1,9 +1,7 @@
-﻿using Proyecto_Control_Logistico.Domain.Entities;
+﻿using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
+using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Infrastructure.Data;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
 {

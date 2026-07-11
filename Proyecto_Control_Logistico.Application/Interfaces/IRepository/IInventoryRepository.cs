@@ -1,6 +1,7 @@
-﻿using Proyecto_Control_Logistico.Domain.Entities;
+﻿using Proyecto_Control_Logistico.Application.DTOs;
+using Proyecto_Control_Logistico.Domain.Entities;
 
-namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
+namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
 {
     public interface IInventoryRepository : IRepository<Inventary>
     {

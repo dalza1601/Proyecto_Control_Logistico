@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Application.DTOs;
-using Proyecto_Control_Logistico.Domain.Entities;
-using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
-using Proyecto_Control_Logistico.Infrastructure.Data;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.UI.MVC.Utils;
 
 namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
@@ -16,7 +13,8 @@ namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers
     public class ProductsController : BaseController
     {
         public ProductsController(IUnitOfWork unitOfWork, ILogger<BaseController> logger, IMapper mapper) : base(unitOfWork, logger, mapper)
-        { }
+        {
+        }
 
         public async Task<IActionResult> Index()
         {

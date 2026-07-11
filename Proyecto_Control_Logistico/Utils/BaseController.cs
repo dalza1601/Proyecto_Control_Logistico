@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_Control_Logistico.Domain;
 using Proyecto_Control_Logistico.Domain.Enums;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 
 namespace Proyecto_Control_Logistico.UI.MVC.Utils
 {
@@ -40,7 +40,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Utils
             TempData["notification"] = msg;
         }
 
-        public void AlertErrorWithFooter(string title, TypeIconsNotification typeIcons, string text, string footer = "") 
+        public void AlertErrorWithFooter(string title, TypeIconsNotification typeIcons, string text, string footer = "")
         {
             var msg = $"<script language='javascript' type='text/javascript'>" +
                 "Swal.fire({icon: " + $"'{typeIcons}'" + ", title:" + $"'{title}', text: '{text}', footer: '{footer}'" + " })</script>";
@@ -54,7 +54,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Utils
             TempData["notification"] = msg;
         }
 
-        public void AlertDeleteYesOrNot() 
+        public void AlertDeleteYesOrNot()
         {
             var msg = $"<script language='javascript' type='text/javascript'>" +
                     "const swalWithBootstrapButtons = Swal.mixin({" +
@@ -80,7 +80,7 @@ namespace Proyecto_Control_Logistico.UI.MVC.Utils
             TempData["notification"] = msg;
         }
 
-        public void Message(string message, NotificationType notificationType) 
+        public void Message(string message, NotificationType notificationType)
         {
             TempData["notification2"] = message;
 
@@ -88,14 +88,14 @@ namespace Proyecto_Control_Logistico.UI.MVC.Utils
             {
                 case NotificationType.sucess:
                     TempData["NotificationCSS"] = "alert-box success";
-                    break;  
+                    break;
                 case NotificationType.error:
                     TempData["NotificationCSS"] = "alert-box error";
                     break;
                 case NotificationType.warning:
                     TempData["NotificationCSS"] = "alert-box warning";
                     break;
-                case  NotificationType.info:
+                case NotificationType.info:
                     TempData["NotificationCSS"] = "alert-box notice";
                     break;
             }

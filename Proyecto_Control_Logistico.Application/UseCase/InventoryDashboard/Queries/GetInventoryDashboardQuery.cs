@@ -15,6 +15,7 @@ namespace Proyecto_Control_Logistico.Application.UseCase.InventoryDashboard.Quer
             _movementInventoryRepository = movementInventoryRepository;
             _warehouseRepository = warehouseRepository;
             _productRepository = productRepository;
+
         }
 
         public async Task<InventoryDashboardDTO> ExecuteAsync()

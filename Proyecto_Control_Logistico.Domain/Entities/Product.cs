@@ -25,7 +25,6 @@ namespace Proyecto_Control_Logistico.Domain.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal PriceSell { get; set; }
         
-        [Column(TypeName = "decimal(18,2)")]
         public int Stock { get; set; }
         
         [Required]
@@ -34,5 +33,6 @@ namespace Proyecto_Control_Logistico.Domain.Entities
 
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
+        public ICollection<Inventary> Inventories { get; set; } = new List<Inventary>();
     }
 }

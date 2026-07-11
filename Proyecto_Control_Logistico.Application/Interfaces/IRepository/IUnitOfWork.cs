@@ -1,8 +1,4 @@
-﻿
-using Proyecto_Control_Logistico.Domain.Entities;
-using Proyecto_Control_Logistico.Infrastructure.Data;
-
-namespace Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository
+﻿namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {

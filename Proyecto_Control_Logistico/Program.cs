@@ -1,21 +1,26 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.Application.Mapping;
+using Proyecto_Control_Logistico.Application.UseCase;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Services;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Interfaces;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Services;
 using Proyecto_Control_Logistico.Infrastructure.Data;
 using Proyecto_Control_Logistico.Infrastructure.Mongo;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Mappings;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories.Interfaces;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
+using Proyecto_Control_Logistico.Infrastructure.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.Repository;
+using Proyecto_Control_Logistico.Infrastructure.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("SQLSERVER_CONECTION") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("SQLSERVER_AZURE_Connection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
@@ -35,14 +40,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 
-//builder.Services.AddControllersWithViews();
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-//builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 builder.Services.AddControllersWithViews();
+
+
 builder.Services.AddRazorPages();
 
 //Configuracion MongoDB
@@ -51,7 +51,13 @@ builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("Mong
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
-//builder.Services.AddScoped<IProductImportService, ProductImportService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
+
+// Agregamos los casos de uso de la capa Application
+builder.Services.AddApplicationServices();
+
+// Agregamos los repositorios de la capa Infrastructure
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 //Agregamos el orquestador que es UnitOfWork EF
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -60,7 +66,22 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile(new MappingHelper());
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;  
+});
+
 var app = builder.Build();
+
+// Agregamos el orquestador de Seeders
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    DbInitializer.Initialize(db);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -72,7 +93,7 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -80,8 +101,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Admin}/{controller=Category}/{action=Index}/{id?}")
-    //pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}")
+    pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 // url -> /Producto/Detalle/1
 // url -> /Admin/Producto/Detalle/1
