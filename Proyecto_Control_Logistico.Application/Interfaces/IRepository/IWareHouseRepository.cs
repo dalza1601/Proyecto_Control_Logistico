@@ -6,6 +6,6 @@ namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
     public interface IWareHouseRepository : IRepository<Warehouse>
     {
         Task<Warehouse> GetWareHouseByNameAsync(string name);
-        Task<List<WarehouseDTO>> GetWareHouseSummaryAsync();
+        Task<List<WareHouseDTO>> GetWareHouseSummaryAsync();
     }
 }
