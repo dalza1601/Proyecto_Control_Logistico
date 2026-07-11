@@ -12,7 +12,7 @@
         public IEnumerable<int> SerieInputs { get; set; }  // Misma longitud que Labels
         public IEnumerable<int> SerieOutputs { get; set; }   // Misma longitud que Labels
 
-        public List<WarehouseDTO> Warehouses { get; set; }
+        public List<WareHouseDTO> Warehouses { get; set; }
         public List<MovementInventoryDTO> LastMovements { get; set; }
     }
 }
