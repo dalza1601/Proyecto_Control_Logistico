@@ -19,7 +19,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Name == name);
 
-        public async Task<List<WarehouseDTO>> GetWareHouseSummaryAsync()
+        public async Task<List<WareHouseDTO>> GetWareHouseSummaryAsync()
         {
             var result = await _context.MovementInventories
                 .Join(
@@ -29,7 +29,7 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
                     (movement, warehouse) => new { movement, warehouse }
                 )
                 .GroupBy(x => x.warehouse.Name)
-                .Select(g => new WarehouseDTO
+                .Select(g => new WareHouseDTO
                 {
                     Name = g.Key,
                     Inputs = g.Count(x => x.movement.MovementType == "Entrada"),
