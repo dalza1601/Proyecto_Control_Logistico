@@ -7,6 +7,8 @@ using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces.IReadExcel;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Services;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Interfaces;
+using Proyecto_Control_Logistico.FL.UTIL.Pdf.Services;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Services.ReadExcel;
 using Proyecto_Control_Logistico.Infrastructure.Data;
 using Proyecto_Control_Logistico.Infrastructure.Hubs;
@@ -55,6 +57,7 @@ builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
 
 // Servicios de Excel
 builder.Services.AddScoped<IExcelService, ExcelService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<IOrderReadExcel, OrderReadExcel>();
 
 // Agregamos los casos de uso de la capa Application
