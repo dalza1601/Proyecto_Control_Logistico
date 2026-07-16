@@ -24,7 +24,7 @@ namespace Proyecto_Control_Logistico.Application.UseCase.InventoryDashboard.Quer
             int totalActiveProducts = await _productRepository.ActiveProductsCountAsync();
 
             var warehouseSummary = movementInventoryWithWareHouse.GroupBy(m => m.Warehouse)
-                .Select(g => new WarehouseDTO
+                .Select(g => new WareHouseDTO
                 {
                     Name = g.Key.Name,
                     Inputs = (int)g.Where(x => x.MovementType == MovementInventoryConstants.MOVEMENT_TYPE_INPUT).Sum(x => x.Quantity),
