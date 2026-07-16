@@ -9,10 +9,13 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //Aquí agrupas repositoris
+            //Aquí agrupas repositories
             services.AddScoped<IMovementInventoryRepository, MovementInventoryRepository>();
             services.AddScoped<IWareHouseRepository, WareHouseRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             return services;
         }

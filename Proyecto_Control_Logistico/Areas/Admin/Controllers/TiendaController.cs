@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Application.Interfaces.IRepository;// se reemplazo ya que la direccion anterior no era la correcta using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 using Proyecto_Control_Logistico.UI.MVC.Helpers;

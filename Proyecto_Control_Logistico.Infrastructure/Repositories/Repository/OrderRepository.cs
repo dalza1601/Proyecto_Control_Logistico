@@ -51,5 +51,22 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
             var next = (last?.Id ?? 0) + 1;
             return $"ORD-{DateTime.Now:yyyyMMdd}-{next:D6}";
         }
+
+        public async Task<bool> SaveOrderAsync(Order order)
+        {
+            _context.Orders.Add(order);
+            int rowsAffected = await _context.SaveChangesAsync();
+            return rowsAffected > 0;
+        }
+
+        public async Task<IEnumerable<Order>> GetLastOrdersAsync()
+        {
+            return await _context.Orders
+                .Include(o => o.Supplier)
+                .AsNoTracking()
+                .OrderByDescending(o => o.CreatedAt)
+                .Take(20)
+                .ToListAsync();
+        }
     }
 }

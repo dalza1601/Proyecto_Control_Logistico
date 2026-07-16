@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Proyecto_Control_Logistico.Application.UseCase.InventoryDashboard.Queries;
+using Proyecto_Control_Logistico.Application.UseCase.OrderUseCase.Command;
+using Proyecto_Control_Logistico.Application.UseCase.OrderUseCase.Queries;
 
 namespace Proyecto_Control_Logistico.Application.UseCase
 {
@@ -9,6 +11,8 @@ namespace Proyecto_Control_Logistico.Application.UseCase
         {
             // Aquí registras tus casos de uso como servicios Scoped
             services.AddScoped<GetInventoryDashboardQuery>();
+            services.AddScoped<InsertOrder>();
+            services.AddScoped<GetOrdersQuery>();
 
             return services;
         }

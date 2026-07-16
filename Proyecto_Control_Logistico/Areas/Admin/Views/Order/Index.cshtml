@@ -1,0 +1,196 @@
+﻿@using Proyecto_Control_Logistico.Application.DTOs;
+@using Proyecto_Control_Logistico.UI.MVC.ViewModel
+@model OrderViewModel
+@{
+    ViewData["Title"] = "Órdenes de compra";
+
+    // ---------- DATOS DE RESPALDO (bórralos cuando conectes tu Model real) ----------
+    var orders = Model != null ? (IEnumerable<dynamic>)Model.orders : new List<OrderDTO>();
+    var preview = Model != null ? Model.ordersPreview : new OrderDTO();
+    bool isPreviewView = Model != null ? Model.isPreviewView : false;
+}
+
+<div class="container-fluid px-3 px-md-4 py-4" style="max-width:1300px;">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+        <div>
+            <div class="text-uppercase small text-secondary-emphasis fw-semibold mb-1" style="letter-spacing:.14em; font-size:11.5px;">
+                Compras · Logística
+            </div>
+            <h1 class="display-title mb-0">Órdenes de compra</h1>
+        </div>
+        <button type="button" class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#modalCargarExcel">
+            <i class="bi bi-upload"></i> Cargar orden de compra (Excel)
+        </button>
+    </div>
+
+    @if (isPreviewView)
+    {
+        <!-- ================= VISTA PREVIA DEL EXCEL CARGADO ================= -->
+        <div class="card preview-card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+                    <div>
+                        <span class="badge rounded-pill badge-warn mb-2">Pendiente de aprobación</span>
+                        <h2 class="section-title h6 fw-semibold mb-0">Vista previa — archivo cargado</h2>
+                        <div class="text-secondary small">Revisa los datos antes de registrar la orden en el sistema</div>
+                    </div>
+
+                    <form method="post" asp-action="DescartarPreview" asp-controller="Orders" class="d-flex gap-2">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Descartar</button>
+                        <button type="submit" class="btn btn-accent btn-sm" formaction="/Orders/AprobarPreview">Aprobar y registrar</button>
+                    </form>
+                </div>
+
+                <dl class="row preview-header mb-3">
+                    <div class="col-6 col-md-3">
+                        <dt>N° de orden</dt>
+                        <dd class="mono">@preview.NumberOrder</dd>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <dt>Proveedor</dt>
+                        <dd>@preview.SupplierName</dd>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <dt>Código proveedor</dt>
+                        <dd class="mono">@preview.SupplierId</dd>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <dt>Total</dt>
+                        <dd class="mono text-warning">S/ @(((decimal)preview.TotalAmount).ToString("N2"))</dd>
+                    </div>
+                </dl>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="text-secondary text-uppercase small">
+                                <th>#</th>
+                                <th>Producto</th>
+                                <th>Cód. producto</th>
+                                <th class="text-end">Cantidad</th>
+                                <th class="text-end">Precio unit.</th>
+                                <th class="text-end">Precio total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+							@{
+								int i = 0;
+							}
+							
+                            @foreach (var d in preview.OrderDetails)
+                            {
+                                i++;
+                                <tr>
+                                    <td class="text-secondary">i</td>
+                                    <td class="fw-medium">@d.ProductName <span class="text-secondary small">(Id @d.ProductCode)</span></td>
+                                    <td class="mono text-secondary">@d.ProductCode</td>
+                                    <td class="mono text-end">@d.Quantity</td>
+                                    <td class="mono text-end">S/ @(((decimal)d.UnitPrice).ToString("N2"))</td>
+                                    <td class="mono text-end">S/ @(((decimal)d.TotalPrice).ToString("N2"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-end text-secondary small">Total de la orden</td>
+                                <td class="mono text-end fw-bold">S/ @(((decimal)preview.TotalAmount).ToString("N2"))</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <!-- ================= TABLA DE ORDENES REGISTRADAS ================= -->
+    @if (!isPreviewView)
+    {
+		<div class="card">
+			<div class="card-body">
+				<h2 class="section-title h6 fw-semibold mb-1">Órdenes registradas</h2>
+				<div class="text-secondary small mb-3">Listado informativo — solo lectura</div>
+
+				<div class="table-responsive">
+					<table class="table table-hover align-middle mb-0">
+						<thead>
+							<tr class="text-secondary text-uppercase small">
+								<th>N° de orden</th>
+								<th>Proveedor</th>
+								<th class="text-end">Costo total</th>
+								<th>Estado</th>
+								<th>Fecha de orden</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var o in orders)
+							{
+								string tipo = (string)o.Status switch
+								{
+									"Aprobado" => "badge-in",
+									"Pendiente" => "badge-warn",
+									"Rechazado" => "badge-out",
+									"Cancelado" => "badge-muted",
+									_ => "badge-muted"
+								};
+								string estadoTexto = (string)o.Status;
+								<tr>
+									<td class="mono fw-medium">@o.NumberOrder</td>
+									<td>@o.SupplierName</td>
+									<td class="mono text-end">S/ @(((decimal)o.TotalAmount).ToString("N2"))</td>
+									<td><span class="badge rounded-pill @tipo">@estadoTexto</span></td>
+									<td class="text-secondary mono">@(((DateTime)o.DateOrder).ToString("dd/MM/yyyy"))</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+    }
+    
+
+</div>
+
+<!-- ================= MODAL: CARGAR EXCEL ================= -->
+<div class="modal fade" id="modalCargarExcel" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" asp-area="Admin" asp-controller="Order" asp-action="ImportExcel" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title section-title">Cargar orden de compra</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-secondary small">
+                        Sube el archivo <strong>.xlsx</strong> con la plantilla de orden de compra.
+                        Solo se lee la primera pestaña del archivo.
+                    </p>
+                    <label class="drop-zone d-block" for="archivoExcelInput">
+                        <i class="bi bi-file-earmark-spreadsheet fs-2 text-secondary d-block mb-2"></i>
+                        <span class="text-secondary small">Arrastra el archivo aquí o haz clic para seleccionarlo</span>
+                        <input class="form-control d-none" type="file" id="archivoExcelInput" name="archivoExcel" accept=".xlsx" required />
+                    </label>
+                    <div id="nombreArchivoSeleccionado" class="text-secondary small mt-2"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-accent btn-sm">Ver vista previa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+@section Scripts{
+    <script src="~/js/modules/order.js"></script>
+}
+
+@section CSS {
+    <link rel="stylesheet" href="~/css/modules/orderStyle.css" />
+}

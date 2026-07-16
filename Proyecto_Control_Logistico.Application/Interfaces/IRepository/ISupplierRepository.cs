@@ -6,5 +6,6 @@ namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
     {
         Task<Supplier?> GetByRucAsync(string ruc);
         Task<bool> SupplierExistAsync(string ruc);
+        Task<IEnumerable<Supplier>> GetSuppliersByIdsAsync(List<int> ids);
     }
 }

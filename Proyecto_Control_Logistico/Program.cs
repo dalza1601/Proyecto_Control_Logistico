@@ -5,10 +5,13 @@ using Proyecto_Control_Logistico.Application.Mapping;
 using Proyecto_Control_Logistico.Application.UseCase;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces;
+using Proyecto_Control_Logistico.FL.UTIL.Excel.Interfaces.IReadExcel;
 using Proyecto_Control_Logistico.FL.UTIL.Excel.Services;
 using Proyecto_Control_Logistico.FL.UTIL.Pdf.Interfaces;
 using Proyecto_Control_Logistico.FL.UTIL.Pdf.Services;
+using Proyecto_Control_Logistico.FL.UTIL.Excel.Services.ReadExcel;
 using Proyecto_Control_Logistico.Infrastructure.Data;
+using Proyecto_Control_Logistico.Infrastructure.Hubs;
 using Proyecto_Control_Logistico.Infrastructure.Mongo;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Mappings;
 using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories;
@@ -16,6 +19,7 @@ using Proyecto_Control_Logistico.Infrastructure.Mongo.Repositories.Interfaces;
 using Proyecto_Control_Logistico.Infrastructure.Repositories;
 using Proyecto_Control_Logistico.Infrastructure.Repositories.Repository;
 using Proyecto_Control_Logistico.Infrastructure.Seed;
+using Proyecto_Control_Logistico.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,14 +54,18 @@ MongoClassMap.RegisterMappings();
 builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoSettings"));
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<IMongoUnitOfWork, MongoUnitOfWork>();
+
+// Servicios de Excel
 builder.Services.AddScoped<IExcelService, ExcelService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
+builder.Services.AddScoped<IOrderReadExcel, OrderReadExcel>();
 
 // Agregamos los casos de uso de la capa Application
 builder.Services.AddApplicationServices();
 
 // Agregamos los repositorios de la capa Infrastructure
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddAuxiliaryInfrastructureServices(builder.Configuration);
 
 //Agregamos el orquestador que es UnitOfWork EF
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -73,6 +81,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;  
 });
+
+// Registro de SignalIR biblioteca de código abierto de Microsoft para ASP.NET
+// que facilita la incorporación de funciones en tiempo real en aplicaciones web
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -108,5 +120,8 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+// Configuración de SignalR para el hub de inventario (Mapeo del hub)
+app.MapHub<InventoryHub>("/inventoryHub");
 
 app.Run();

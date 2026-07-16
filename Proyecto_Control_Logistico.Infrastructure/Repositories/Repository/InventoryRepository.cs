@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Proyecto_Control_Logistico.Domain.Entities;
 using Proyecto_Control_Logistico.Infrastructure.Data;
 using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
-using Proyecto_Control_Logistico.Application.DTOs;
 
 namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
 {
@@ -51,11 +50,6 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
             return await _context.Inventaries
                 .Where(x => x.ProductId == productId)
                 .SumAsync(x => (decimal?)x.StockAvailable) ?? 0m;
-        }
-
-        public Task<IEnumerable<MovementInventoryDTO>> GetLastMovementsAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

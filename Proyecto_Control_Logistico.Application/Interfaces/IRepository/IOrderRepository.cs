@@ -8,5 +8,7 @@ namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
         Task<IEnumerable<Order>> GetOrdersByDateRangeAsync(DateTime startDate, DateTime endDate);
         Task<IEnumerable<Order>> GetOrdersBySupplierIdAsync(int supplierId);
         Task<string> GenerateUniqueOrderNumberAsync();
+        Task<bool> SaveOrderAsync(Order order);
+        Task<IEnumerable<Order>> GetLastOrdersAsync();
     }
 }

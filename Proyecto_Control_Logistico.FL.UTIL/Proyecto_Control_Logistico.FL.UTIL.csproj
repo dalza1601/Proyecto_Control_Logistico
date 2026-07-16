@@ -16,4 +16,9 @@
     <ProjectReference Include="..\Proyecto_Control_Logistico.Infrastructure\Proyecto_Control_Logistico.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Proyecto_Control_Logistico.Application\Proyecto_Control_Logistico.Application.csproj" />
+    <ProjectReference Include="..\Proyecto_Control_Logistico.Domain\Proyecto_Control_Logistico.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
