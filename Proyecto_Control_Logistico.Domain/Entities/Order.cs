@@ -10,6 +10,7 @@ namespace Proyecto_Control_Logistico.Domain.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
         public Supplier? Supplier { get; set; }
+        public string? Status { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     }

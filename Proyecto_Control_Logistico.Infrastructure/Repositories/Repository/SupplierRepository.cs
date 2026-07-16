@@ -21,6 +21,11 @@ namespace Proyecto_Control_Logistico.Infrastructure.Repositories.Repository
                 .FirstOrDefaultAsync(x => x.RUC == ruc);
         }
 
+        public async Task<IEnumerable<Supplier>> GetSuppliersByIdsAsync(List<int> ids)
+        {
+            return await _context.Suppliers.Where(s=>ids.Contains(s.Id)).ToListAsync();
+        }
+
         public async Task<bool> SupplierExistAsync(string ruc)
         {
             return await _context.Suppliers

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto_Control_Logistico.Application.Interfaces.IRepository;
 using Proyecto_Control_Logistico.Domain.Entities;
-using Proyecto_Control_Logistico.Infrastructure.Repositories.IRepository;
 using Proyecto_Control_Logistico.UI.MVC.Helpers;
 
 namespace Proyecto_Control_Logistico.UI.MVC.Areas.Admin.Controllers

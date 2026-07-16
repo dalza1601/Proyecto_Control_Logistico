@@ -12,8 +12,8 @@ using Proyecto_Control_Logistico.Infrastructure.Data;
 namespace Proyecto_Control_Logistico.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260709003639_last-migration")]
-    partial class lastmigration
+    [Migration("20260711002344_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,6 +168,9 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DireccionEntrega")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -413,6 +416,9 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                     b.Property<string>("NumberOrder")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");

@@ -1,5 +1,4 @@
-﻿using Proyecto_Control_Logistico.Application.DTOs;
-using Proyecto_Control_Logistico.Domain.Entities;
+﻿using Proyecto_Control_Logistico.Domain.Entities;
 
 namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
 {
@@ -8,6 +7,7 @@ namespace Proyecto_Control_Logistico.Application.Interfaces.IRepository
         Task<IEnumerable<MovementInventory>> GetMovementInventoryByProductIdAsync(int productId);
         Task<IEnumerable<MovementInventory>> GetMovementInventoryByDateRangeAsync(DateTime startDate, DateTime endDate);
         Task<IEnumerable<MovementInventory>> GetKardexProductoAsync(int productId);
-        Task<IEnumerable<MovementInventoryDTO>> GetLastMovementsAsync();
+        Task<IEnumerable<MovementInventory>> GetLastMovementsAsync();
+        Task<IEnumerable<MovementInventory>> GetMovementWithWareHouseAsync();
     }
 }

@@ -414,6 +414,9 @@ namespace Proyecto_Control_Logistico.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");
 

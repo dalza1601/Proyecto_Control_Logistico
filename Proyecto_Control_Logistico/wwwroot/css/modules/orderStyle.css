@@ -1,0 +1,104 @@
+﻿[data-bs-theme=dark] {
+    --bs-body-bg: #10151A;
+    --bs-body-color: #E9EEF0;
+    --bs-secondary-color: #8CA0AA;
+    --bs-border-color: rgba(232,237,239,0.08);
+    --bs-border-color-translucent: rgba(232,237,239,0.08);
+    --bs-tertiary-bg: #1E2730;
+    --bs-success: #4FD1AE;
+    --bs-success-rgb: 79,209,174;
+    --bs-danger: #F2665E;
+    --bs-danger-rgb: 242,102,94;
+    --bs-warning: #F2B84B;
+    --bs-warning-rgb: 242,184,75;
+    --bs-info: #6FA8DC;
+    --bs-info-rgb: 111,168,220;
+    --bs-secondary: #5C6E77;
+    --bs-secondary-rgb: 92,110,119;
+    --bs-card-bg: #171E24;
+    --bs-card-border-color: var(--bs-border-color);
+    --bs-modal-bg: #171E24;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: radial-gradient(1100px 500px at 85% -10%, rgba(79,209,174,0.06), transparent 60%), radial-gradient(900px 500px at 0% 0%, rgba(242,184,75,0.05), transparent 55%), var(--bs-body-bg);
+    min-height: 100vh;
+}
+
+.mono {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.display-title, h2.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.display-title {
+    font-weight: 700;
+    font-size: clamp(22px,3vw,30px);
+}
+
+.badge-in {
+    background: rgba(var(--bs-success-rgb), .14);
+    color: var(--bs-success);
+}
+
+.badge-out {
+    background: rgba(var(--bs-danger-rgb), .14);
+    color: var(--bs-danger);
+}
+
+.badge-warn {
+    background: rgba(var(--bs-warning-rgb), .14);
+    color: var(--bs-warning);
+}
+
+.badge-muted {
+    background: rgba(var(--bs-secondary-rgb), .18);
+    color: var(--bs-secondary-color);
+}
+
+.btn-accent {
+    background: var(--bs-success);
+    border-color: var(--bs-success);
+    color: #0A2620;
+    font-weight: 600;
+}
+
+    .btn-accent:hover {
+        background: #3fc19d;
+        border-color: #3fc19d;
+        color: #0A2620;
+    }
+
+.preview-card {
+    border: 1px dashed rgba(var(--bs-warning-rgb), .45);
+    background: rgba(var(--bs-warning-rgb), .04);
+}
+
+.preview-header dt {
+    color: var(--bs-secondary-color);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.preview-header dd {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.drop-zone {
+    border: 1.5px dashed var(--bs-border-color);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    transition: border-color .15s ease, background .15s ease;
+}
+
+    .drop-zone.dragover {
+        border-color: var(--bs-success);
+        background: rgba(var(--bs-success-rgb), .06);
+    }
